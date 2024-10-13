@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Database, MessageCircle, ShoppingBag, Menu, Search } from 'lucide-react';
+import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, Menu, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Productos.css"
 
 export default function ProductsPage() {
-  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [currentPage, setCurrentPage] = useState('/productos');
   const navigate = useNavigate();
 
-  const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
 
   // Ejemplo de datos de productos
   const products = [
@@ -21,12 +18,11 @@ export default function ProductsPage() {
 
   const navItems = [
     { name: 'Inicio', icon: Home, path: '/' },
-    { name: 'Proveedores', icon: Users, path: '/proveedores' },
     { name: 'Productos', icon: Package, path: '/productos' },
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
     { name: 'Análisis', icon: BarChart2, path: '/analisis' },
-    { name: 'Datos', icon: Database, path: '/datos' },
+    { name: 'Configuración', icon: Settings, path: '/datos' },
   ];
 
   return (
@@ -40,7 +36,7 @@ export default function ProductsPage() {
           {navItems.map((item) => (
             <button
               key={item.name}
-              className="nav-item"
+              className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
               onClick={() => navigate(item.path)}
             >
               <item.icon className="nav-icon" />
@@ -56,7 +52,6 @@ export default function ProductsPage() {
         <header className="navbar">
           <div className="navbar-container">
             <a href="#" className="navbar-title">
-              Inicio
             </a>
             <div className="navbar-actions">
               <button className="navbar-button">

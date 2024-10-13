@@ -6,6 +6,9 @@ import Home from "./pages/Home"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Productos from "./pages/Productos"
+import Pedidos from "./pages/Pedidos"
+import Recomendaciones from "./pages/Recomendaciones"
+import Analisis from "./pages/Analisis"
 
 function Logout() {
   localStorage.clear()
@@ -34,6 +37,30 @@ function App() {
           element={
             <ProtectedRoute>
               <Productos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/pedidos"
+          element={
+            <ProtectedRoute>
+              <Pedidos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/recomendaciones"
+          element={
+            <ProtectedRoute>
+              <Recomendaciones />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analisis"
+          element={
+            <ProtectedRoute>
+              <Analisis />
             </ProtectedRoute>
           }
         />

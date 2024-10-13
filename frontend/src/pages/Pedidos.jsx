@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, Menu } from 'lucide-react';
+import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import "../styles/Home.css"
+import "../styles/Pedidos.css"
 
-export default function HomePage() {
+export default function PedidosPage() {
+  const [currentPage, setCurrentPage] = useState('/pedidos');
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState('/');
 
   const navItems = [
     { name: 'Inicio', icon: Home, path: '/' },
@@ -16,7 +16,12 @@ export default function HomePage() {
     { name: 'Configuración', icon: Settings, path: '/datos' },
   ];
 
-  
+  const pedidos = [
+    { id: 1, fecha: '2023-05-15', descripcion: 'Pedido de verano', productos: ['Camisetas x10', 'Shorts x5'], total: 1500 },
+    { id: 2, fecha: '2023-05-20', descripcion: 'Reposición de inventario', productos: ['Zapatillas x20', 'Calcetines x50'], total: 3000 },
+    { id: 3, fecha: '2023-05-25', descripcion: 'Pedido especial', productos: ['Chaquetas x5', 'Pantalones x10'], total: 2000 },
+  ];
+
   return (
     <div className="home-container">
       {/* Sidebar */}
@@ -38,9 +43,7 @@ export default function HomePage() {
         </nav>
       </aside>
 
-      {/* Main content */}
       <div className="main-content">
-        {/* Navbar */}
         <header className="navbar">
           <div className="navbar-container">
             <a href="#" className="navbar-title">
@@ -56,19 +59,28 @@ export default function HomePage() {
           </div>
         </header>
 
-        {/* Page content */}
         <main className="page-content">
           <div className="content-container">
-            <h2 className="welcome-title">Bienvenido a Stocket</h2>
-            <div className="welcome-card">
-              <p className="welcome-text">
-                Gestiona tu inventario, proveedores y pedidos de manera eficiente con Stocket. 
-                Explora nuestras funciones y optimiza tu negocio hoy mismo.
-              </p>
+            <h2 className="section-title">Historial de Pedidos</h2>
+            <div className="pedidos-list">
+              {pedidos.map((pedido) => (
+                <div key={pedido.id} className="pedido-card">
+                  <div className="pedido-header">
+                    <span className="pedido-fecha">{pedido.fecha}</span>
+                    <span className="pedido-total">${pedido.total}</span>
+                  </div>
+                  <h3 className="pedido-descripcion">{pedido.descripcion}</h3>
+                  <ul className="pedido-productos">
+                    {pedido.productos.map((producto, index) => (
+                      <li key={index}>{producto}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
         </main>
       </div>
     </div>
   );
-} 
+}
