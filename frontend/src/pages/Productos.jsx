@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, Menu, Search } from 'lucide-react';
+import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, LogOut , Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Productos.css"
 
 export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState('/productos');
   const navigate = useNavigate();
+
+  const handleChatClick = () => {
+    navigate('/chat');
+  };
 
 
   // Ejemplo de datos de productos
@@ -17,12 +21,13 @@ export default function ProductsPage() {
   ];
 
   const navItems = [
-    { name: 'Inicio', icon: Home, path: '/' },
+    { name: 'Inicio', icon: Home, path: '/home' },
     { name: 'Productos', icon: Package, path: '/productos' },
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
     { name: 'Análisis', icon: BarChart2, path: '/analisis' },
     { name: 'Configuración', icon: Settings, path: '/datos' },
+    { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];
 
   return (
@@ -55,7 +60,7 @@ export default function ProductsPage() {
             </a>
             <div className="navbar-actions">
               <button className="navbar-button">
-                <MessageCircle className="navbar-icon" />
+                <MessageCircle className="navbar-icon" onClick={handleChatClick} />
               </button>
               <button className="navbar-button">
                 <ShoppingBag className="navbar-icon" />

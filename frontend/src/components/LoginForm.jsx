@@ -24,7 +24,7 @@ export default function LoginForm({ route, method }) {
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
       setSuccessMessage("Inicio de sesión exitoso");
-      navigate("/")
+      navigate("/home")
     } catch (error) {
       setErrorMessage(error.message || "Error al iniciar sesión");
     }
