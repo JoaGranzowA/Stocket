@@ -54,14 +54,8 @@ class LoginView(APIView):
 
         if user is not None:
             refresh = RefreshToken.for_user(user)
-            # Determinar la URL de redirección según el tipo de usuario
-            redirect_url = '/default/home'  # URL predeterminada
-            if user.is_employee:
-                redirect_url = '/proveedor/home'
-            elif user.is_customer:
-                redirect_url = '/vendedor/home'
-
-            # Crear manualmente la respuesta con todos los datos necesarios
+            
+            # Create the response data including tokens
             user_data = {
                 'id': user.id,
                 'username': user.username,
@@ -71,13 +65,35 @@ class LoginView(APIView):
                 'is_customer': user.is_customer,
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-                'redirect_url': redirect_url,
             }
 
+            # Optionally redirect based on user type
+            redirect_url = '/default/home'
+            if user.is_employee:
+                redirect_url = '/proveedor/home'
+            elif user.is_customer:
+                redirect_url = '/vendedor/home'
+            
+            user_data['redirect_url'] = redirect_url
 
+            # Return tokens and user info
             return Response(user_data)
 
         return Response({'error': 'Invalid credentials'}, status=400)
+
+# Optionally, add a LogoutView to invalidate tokens
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            # Blacklist or invalidate the refresh token
+            refresh_token = request.data.get('refresh_token')
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response({"message": "Successfully logged out."}, status=205)
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
 
 
 # Vista para obtener datos de usuario autenticado
