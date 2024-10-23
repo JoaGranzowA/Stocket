@@ -5,14 +5,14 @@ import "../styles/Home.css"
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState('/home');
+  const [currentPage, setCurrentPage] = useState('/vendedor/home');
 
   const handleChatClick = () => {
     navigate('/chat');
   };
 
   const navItems = [
-    { name: 'Inicio', icon: Home, path: '/home' },
+    { name: 'Inicio', icon: Home, path: '/vendedor/home' },
     { name: 'Productos', icon: Package, path: '/productos' },
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },

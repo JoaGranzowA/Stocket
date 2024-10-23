@@ -11,6 +11,8 @@ import Recomendaciones from "./pages/Recomendaciones"
 import Analisis from "./pages/Analisis"
 import Landingpage from "./pages/Landingpage"
 import Chat from "./pages/Chat"
+import Homeproveedor from "./pages/Homeproveedor"
+import Misproductos from "./pages/Misproductos"
 
 function Logout() {
   localStorage.clear()
@@ -28,10 +30,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Landingpage />} />
         <Route
-          path="/home"
+          path="/vendedor/home"
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/proveedor/home"
+          element={
+            <ProtectedRoute>
+              <Homeproveedor />
             </ProtectedRoute>
           }
         />
@@ -40,6 +50,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Productos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/misproductos"
+          element={
+            <ProtectedRoute>
+              <Misproductos />
             </ProtectedRoute>
           }
         />

@@ -9,12 +9,14 @@ from .serializers import UserSerializer
 from .models import User
 from .serializers import ProductoSerializer
 from .models import Producto
- 
+
+
 
 class ProductoView(generics.ListAPIView):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
     permission_classes = [AllowAny]
+
 
 class ProductoCrear(generics.CreateAPIView):
     queryset = Producto.objects.all()
@@ -41,7 +43,7 @@ class RegisterView(APIView):
 
         return Response(UserSerializer(user).data)
 
-# Vista para login
+
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
@@ -52,12 +54,31 @@ class LoginView(APIView):
 
         if user is not None:
             refresh = RefreshToken.for_user(user)
-            return Response({
+            # Determinar la URL de redirección según el tipo de usuario
+            redirect_url = '/default/home'  # URL predeterminada
+            if user.is_employee:
+                redirect_url = '/proveedor/home'
+            elif user.is_customer:
+                redirect_url = '/vendedor/home'
+
+            # Crear manualmente la respuesta con todos los datos necesarios
+            user_data = {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'is_admin': user.is_admin,
+                'is_employee': user.is_employee,
+                'is_customer': user.is_customer,
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-                'user': UserSerializer(user).data
-            })
+                'redirect_url': redirect_url,
+            }
+
+
+            return Response(user_data)
+
         return Response({'error': 'Invalid credentials'}, status=400)
+
 
 # Vista para obtener datos de usuario autenticado
 class UserProfileView(APIView):

@@ -12,7 +12,7 @@ export default function RecomendacionesPage() {
   };
 
   const navItems = [
-    { name: 'Inicio', icon: Home, path: '/home' },
+    { name: 'Inicio', icon: Home, path: '/vendedor/home' },
     { name: 'Productos', icon: Package, path: '/productos' },
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },

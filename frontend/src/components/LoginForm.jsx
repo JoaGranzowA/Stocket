@@ -6,8 +6,8 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
 export default function LoginForm({ route, method }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // Añadido
-  const [successMessage, setSuccessMessage] = useState(""); // Añadido
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   const handleRegisterClick = () => {
@@ -18,18 +18,35 @@ export default function LoginForm({ route, method }) {
     e.preventDefault();
     setErrorMessage(""); // Limpiar mensajes anteriores
     setSuccessMessage("");
-
+  
     try {
-      const res = await api.post(route, { username, password })
+      // Asegúrate de que la URL esté correctamente configurada.
+      const res = await api.post('/api/login/', { username, password }); 
+  
+      // Imprimir la respuesta para depuración
+      console.log("API response data:", res.data);
+  
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
       setSuccessMessage("Inicio de sesión exitoso");
-      navigate("/home")
+  
+      // Verificar si los datos del usuario existen en la respuesta
+      if (res.data && (res.data.is_employee !== undefined || res.data.is_customer !== undefined)) {
+        // Redirigir según el tipo de usuario
+        if (res.data.redirect_url) {
+          navigate(res.data.redirect_url);
+        } else {
+          setErrorMessage("No se pudo determinar la URL de redirección.");
+        }
+      } else {
+        setErrorMessage("No se pudo obtener la información del usuario");
+      }
     } catch (error) {
-      setErrorMessage(error.message || "Error al iniciar sesión");
+      setErrorMessage(error.response?.data?.error || "Error al iniciar sesión");
     }
   };
 
+  
   return (
     <div style={styles.container}>
       <div style={styles.card}>
@@ -63,21 +80,15 @@ export default function LoginForm({ route, method }) {
                 style={styles.input}
               />
             </div>
-            <button type="submit" style={styles.submitButton}>
-              Iniciar sesión
-            </button>
+            <button type="submit" style={styles.submitButton}>Iniciar Sesión</button>
           </form>
           {errorMessage && <p style={styles.errorMessage}>{errorMessage}</p>}
           {successMessage && <p style={styles.successMessage}>{successMessage}</p>}
         </div>
         <div style={styles.rightPanel}>
-          <h2 style={styles.title}>¿Nuevo por aquí?</h2>
-          <p style={styles.description}>
-            Regístrate para crear una cuenta y acceder a todas las funciones
-          </p>
-          <button style={styles.registerButton} onClick={handleRegisterClick}>
-                Crear cuenta
-            </button>
+          <h3>¿Eres nuevo aquí?</h3>
+          <p>Regístrate para crear una cuenta y empezar a usar nuestros servicios.</p>
+          <button onClick={handleRegisterClick} style={styles.registerButton}>Registrarse</button>
         </div>
       </div>
     </div>
@@ -87,13 +98,11 @@ export default function LoginForm({ route, method }) {
 const styles = {
   container: {
     display: "flex",
-    justifyContent: "center",
     alignItems: "center",
-    minHeight: "100vh",
-    backgroundColor: "#f0f0f0",
+    justifyContent: "center",
+    height: "100vh",
     padding: "2rem",
-    boxSizing: "border-box",
-    fontFamily: "'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+    fontFamily: "Inter, sans-serif",
   },
   card: {
     display: "flex",
