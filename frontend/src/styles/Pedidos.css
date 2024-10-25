@@ -1,178 +1,238 @@
 .home-container {
-    display: flex;
-    height: 100vh;
-    background-color: #f0f0f0;
-    font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  display: flex;
+  height: 100vh;
+  background-color: #f0f0f0;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-container {
+  padding: 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8b5cf6;
+  margin: 0;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #4b5563;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.nav-item:hover {
+  background-color: #f3e8ff;
+}
+
+.nav-item.active {
+  color: #8b5cf6;
+  background-color: #f3e8ff;
+  font-weight: 600;
+}
+
+.nav-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.navbar {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  height: 3rem;
+}
+
+.navbar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  text-decoration: none;
+}
+
+.page-content {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #f3e5f5;
+  padding: 2rem;
+}
+
+.content-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #4a148c;
+  margin-bottom: 1.5rem;
+}
+
+.historial-vacio {
+  text-align: center;
+  font-size: 1.125rem;
+  color: #6a1b9a;
+  margin-top: 2rem;
+  background-color: #e1bee7;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.historial-pedidos {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.lista-pedidos {
+  list-style-type: none;
+  padding: 0;
+}
+
+.pedido-item {
+  border-bottom: 1px solid #e1bee7;
+  padding: 1.5rem 0;
+}
+
+.pedido-item:last-child {
+  border-bottom: none;
+}
+
+.pedido-detalles {
+  background-color: #f3e5f5;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.pedido-detalles h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4a148c;
+  margin-bottom: 0.5rem;
+}
+
+.pedido-detalles p {
+  color: #6a1b9a;
+  margin-bottom: 0.25rem;
+}
+
+.productos-pedido {
+  margin-top: 1rem;
+}
+
+.productos-pedido h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4a148c;
+  margin-bottom: 0.5rem;
+  background-color: #e1bee7;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.productos-pedido ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.producto-detalle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e1bee7;
+  transition: background-color 0.3s;
+}
+
+.producto-detalle:hover {
+  background-color: #f3e5f5;
+}
+
+.producto-detalle:last-child {
+  border-bottom: none;
+}
+
+.detalle-titulo {
+  font-weight: 600;
+  color: #4a148c;
+  flex: 2;
+}
+
+.detalle-cantidad, .detalle-precio {
+  color: #6a1b9a;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    flex-direction: column;
   }
 
   .sidebar {
-    width: 250px;
-    background-color: white;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .logo-container {
-    padding: 1rem;
-  }
-
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #8B5CF6;
-    margin: 0;
-  }
-
-  .sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    padding-top: 1rem;
-  }
-
-  .nav-item {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    color: #4B5563;
-    text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
-    border: none;
-    background: none;
-    cursor: pointer;
     width: 100%;
-    text-align: left;
-    font-size: 1rem;
-  }
-
-  .nav-item:hover {
-    background-color: #F3E8FF;
-    color: #8B5CF6;
-  }
-
-  .nav-item.active {
-    background-color: #F3E8FF;
-    color: #8B5CF6;
-    font-weight: 600;
-  }
-
-  .nav-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-right: 0.75rem;
+    height: auto;
   }
 
   .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .navbar {
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-
-  .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-  }
-
-  .navbar-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1F2937;
-    text-decoration: none;
-  }
-
-  .navbar-actions {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .navbar-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #4B5563;
-    transition: color 0.3s;
-  }
-
-  .navbar-button:hover {
-    color: #8B5CF6;
-  }
-
-  .navbar-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  .page-content {
-    flex: 1;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: #f0f0f0;
+    height: calc(100vh - 60px);
   }
 
   .content-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
+    padding: 1rem;
   }
 
-  .section-title {
-    font-size: 1.875rem;
-    font-weight: 600;
-    color: #1F2937;
-    margin-bottom: 1.5rem;
+  .historial-pedidos {
+    padding: 1rem;
   }
 
-  .pedidos-list {
-    display: grid;
-    gap: 1.5rem;
+  .producto-detalle {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .pedido-card {
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
+  .detalle-cantidad, .detalle-precio {
+    margin-top: 0.25rem;
   }
-
-  .pedido-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-  }
-
-  .pedido-fecha {
-    font-size: 0.875rem;
-    color: #6B7280;
-  }
-
-  .pedido-total {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #8B5CF6;
-  }
-
-  .pedido-descripcion {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #1F2937;
-    margin-bottom: 0.75rem;
-  }
-
-  .pedido-productos {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    color: #4B5563;
-  }
-
-  .pedido-productos li {
-    margin-bottom: 0.25rem;
-  }
+}

@@ -26,7 +26,7 @@ export default function ChatPage() {
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
     { name: 'Análisis', icon: BarChart2, path: '/analisis' },
-    { name: 'Configuración', icon: Settings, path: '/datos' },
+    { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];
 

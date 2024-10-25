@@ -17,7 +17,7 @@ export default function HomePage() {
     { name: 'Mis Productos', icon: Box, path: '/misproductos' },
     { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
     { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
-    { name: 'Configuración', icon: Settings, path: '/datos' },
+    { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];
 

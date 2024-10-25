@@ -18,6 +18,10 @@ export default function LoginForm({ route, method }) {
     e.preventDefault();
     setErrorMessage(""); // Limpiar mensajes anteriores
     setSuccessMessage("");
+
+    // Limpiar tokens existentes antes de intentar iniciar sesión
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
   
     try {
       // Asegúrate de que la URL esté correctamente configurada.
@@ -43,10 +47,12 @@ export default function LoginForm({ route, method }) {
       }
     } catch (error) {
       setErrorMessage(error.response?.data?.error || "Error al iniciar sesión");
+      // Si hay un error, limpiar cualquier token existente
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(REFRESH_TOKEN);
     }
   };
 
-  
   return (
     <div style={styles.container}>
       <div style={styles.card}>

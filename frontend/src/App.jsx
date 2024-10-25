@@ -13,6 +13,9 @@ import Landingpage from "./pages/Landingpage"
 import Chat from "./pages/Chat"
 import Homeproveedor from "./pages/Homeproveedor"
 import Misproductos from "./pages/Misproductos"
+import Carrito from "./pages/Carrito"
+import Confirmacion from "./pages/Confirmacion"
+import Perfil from "./pages/Perfil"
 
 function Logout() {
   localStorage.clear()
@@ -90,6 +93,30 @@ function App() {
           element={
             <ProtectedRoute>
               <Chat />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/carrito"
+          element={
+            <ProtectedRoute>
+              <Carrito />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/confirmacion"
+          element={
+            <ProtectedRoute>
+              <Confirmacion />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/perfil"
+          element={
+            <ProtectedRoute>
+              <Perfil />
             </ProtectedRoute>
           }
         />

@@ -1,17 +1,145 @@
-import React, { useState } from 'react';
-import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, LogOut, DollarSign, Bell, Box, FileText, Plus, Edit, Trash2, AlertTriangle, Upload } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, LogOut, DollarSign, Bell, Box, FileText, Plus, Edit, Trash2, AlertTriangle, Upload } from 'lucide-react';
+import { ACCESS_TOKEN } from '../constants';
 import "../styles/Misproductos.css"
 
 export default function ProductosProveedor() {
-  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState('/misproductos');
-  const [productos, setProductos] = useState([
-    { id: 1, nombre: 'Producto A', precio: 19.99, stock: 50, imagenes: ['/placeholder.svg'], descripcion: 'Descripción del Producto A' },
-    { id: 2, nombre: 'Producto B', precio: 29.99, stock: 30, imagenes: ['/placeholder.svg'], descripcion: 'Descripción del Producto B' },
-    { id: 3, nombre: 'Producto C', precio: 39.99, stock: 10, imagenes: ['/placeholder.svg'], descripcion: 'Descripción del Producto C' },
-  ]);
+  const [productos, setProductos] = useState([]);
   const [productoEditando, setProductoEditando] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    console.log('Token de autenticación:', token);
+
+    fetch('http://localhost:8000/api/productos/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al cargar los productos');
+        }
+        return response.json();
+      })
+      .then((data) => setProductos(data))
+      .catch((error) => console.error('Error al cargar productos:', error));
+  }, []);
+
+  const handleAgregarProducto = (producto) => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    if (!token) {
+      console.error('No hay token disponible');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('titulo', producto.titulo);
+    formData.append('precio', producto.precio);
+    formData.append('stock', producto.stock);
+    formData.append('descripcion', producto.descripcion);
+    if (producto.imagen) {
+      formData.append('imagen', producto.imagen);
+    }
+
+    console.log('Intentando agregar producto:', producto);
+
+    fetch('http://localhost:8000/api/productos/', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => {
+        console.log('Respuesta del servidor:', response);
+        if (!response.ok) {
+          return response.json().then((errorData) => {
+            console.error('Error al agregar producto:', errorData);
+            throw new Error('Error al agregar producto');
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Producto agregado:', data);
+        setProductos([...productos, data]);
+        setProductoEditando(null);
+      })
+      .catch((error) => console.error('Error al agregar producto:', error));
+  };
+
+  const handleGuardarProducto = (producto) => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    if (!token) {
+      console.error('No hay token disponible');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('titulo', producto.titulo);
+    formData.append('precio', producto.precio);
+    formData.append('stock', producto.stock);
+    formData.append('descripcion', producto.descripcion);
+    if (producto.imagen) {
+      formData.append('imagen', producto.imagen);
+    }
+
+    fetch(`http://localhost:8000/api/productos/${producto.id}/`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((errorData) => {
+            console.error('Error al guardar producto:', errorData);
+            throw new Error('Error al guardar producto');
+          });
+        }
+        return response.json();
+      })
+      .then(() => {
+        setProductos((prevProductos) => prevProductos.map((p) => (p.id === producto.id ? producto : p)));
+        setProductoEditando(null);
+      })
+      .catch((error) => console.error('Error al guardar producto:', error));
+  };
+
+  const handleEliminarProducto = (id) => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    if (!token) {
+      console.error('No hay token disponible');
+      return;
+    }
+
+    fetch(`http://localhost:8000/api/productos/${id}/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((errorData) => {
+            console.error('Error al eliminar producto:', errorData);
+            throw new Error('Error al eliminar producto');
+          });
+        }
+        return response.json();
+      })
+      .then(() => {
+        setProductos((prevProductos) => prevProductos.filter((producto) => producto.id !== id));
+      })
+      .catch((error) => console.error('Error al eliminar producto:', error));
+  };
 
   const handleNavigation = (path) => {
     setCurrentPage(path);
@@ -22,61 +150,34 @@ export default function ProductosProveedor() {
     console.log("Chat clicked");
   };
 
-  const handleAgregarProducto = () => {
-    const nuevoProducto = {
-      id: productos.length + 1,
-      nombre: 'Nuevo Producto',
-      precio: 0,
-      stock: 0,
-      imagenes: ['/placeholder.svg'],
-      descripcion: 'Descripción del nuevo producto'
-    };
-    setProductos([...productos, nuevoProducto]);
-    setProductoEditando(nuevoProducto);
-  };
-
-  const handleEditarProducto = (producto) => {
-    setProductoEditando(producto);
-  };
-
-  const handleEliminarProducto = (id) => {
-    setProductos(productos.filter(p => p.id !== id));
-  };
-
-  const handleGuardarProducto = (productoEditado) => {
-    setProductos(productos.map(p => p.id === productoEditado.id ? productoEditado : p));
-    setProductoEditando(null);
-  };
-
   const navItems = [
     { name: 'Inicio', icon: Home, path: '/proveedor/home' },
     { name: 'Mis Productos', icon: Box, path: '/misproductos' },
-    { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
+    { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/pedidos' },
     { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
-    { name: 'Configuración', icon: Settings, path: '/datos' },
+    { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];
 
-
   return (
-    <div className="home-container">
+    <div className="chat-container">
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="logo-container">
           <h1 className="logo">Stocket</h1>
         </div>
-       <nav className="sidebar-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
-              onClick={() => navigate(item.path)}
-            >
-              <item.icon className="nav-icon" />
-              {item.name}
-            </button>
-          ))}
-        </nav>
+        <nav className="sidebar-nav">
+        {navItems.map((item) => (
+          <button
+            key={item.name}
+            className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
+            onClick={() => navigate(item.path)}
+          >
+            <item.icon className="nav-icon" />
+            {item.name}
+          </button>
+        ))}
+      </nav>
       </aside>
 
       <div className="main-content">
@@ -96,15 +197,15 @@ export default function ProductosProveedor() {
         <main className="page-content">
           <div className="content-container">
             <h2 className="title">Gestión de Productos</h2>
-            <button className="boton-agregar" onClick={handleAgregarProducto}>
+            <button className="boton-agregar" onClick={() => setProductoEditando({ id: null, titulo: '', precio: 0, stock: 0, descripcion: '', imagen: null })}>
               <Plus size={20} style={{ marginRight: '0.5rem' }} />
               Agregar Producto
             </button>
             <div className="productos-grid">
               {productos.map(producto => (
                 <div key={producto.id} className="producto-card">
-                  <img src={producto.imagenes[0]} alt={producto.nombre} className="producto-imagen" />
-                  <h3 className="producto-nombre">{producto.nombre}</h3>
+                  {producto.imagen && <img src={`http://localhost:8000${producto.imagen}`} alt={producto.titulo} className="producto-imagen" />}
+                  <h3 className="producto-nombre">{producto.titulo}</h3>
                   <p className="producto-precio">Precio: ${producto.precio.toFixed(2)}</p>
                   <p className="producto-stock">
                     Stock: {producto.stock}
@@ -113,7 +214,7 @@ export default function ProductosProveedor() {
                     )}
                   </p>
                   <div className="producto-acciones">
-                    <button className="boton-accion boton-editar" onClick={() => handleEditarProducto(producto)}>
+                    <button className="boton-accion boton-editar" onClick={() => setProductoEditando(producto)}>
                       <Edit size={20} />
                     </button>
                     <button className="boton-accion boton-eliminar" onClick={() => handleEliminarProducto(producto.id)}>
@@ -132,13 +233,13 @@ export default function ProductosProveedor() {
           <div className="modal-content">
             <h3 className="title">{productoEditando.id ? 'Editar Producto' : 'Agregar Producto'}</h3>
             <div className="form-group">
-              <label className="label" htmlFor="nombre">Nombre</label>
+              <label className="label" htmlFor="titulo">Nombre</label>
               <input
                 className="input"
                 type="text"
-                id="nombre"
-                value={productoEditando.nombre}
-                onChange={(e) => setProductoEditando({...productoEditando, nombre: e.target.value})}
+                id="titulo"
+                value={productoEditando.titulo}
+                onChange={(e) => setProductoEditando({...productoEditando, titulo: e.target.value})}
               />
             </div>
             <div className="form-group">
@@ -171,18 +272,24 @@ export default function ProductosProveedor() {
               />
             </div>
             <div className="form-group">
-              <label className="label">Imágenes</label>
-              <button className="boton-accion boton-editar" style={{ width: '100%' }}>
-                <Upload size={20} style={{ marginRight: '0.5rem' }} />
-                Subir Imágenes
-              </button>
+              <label className="label" htmlFor="imagen">Imagen</label>
+              <input
+                className="input"
+                type="file"
+                id="imagen"
+                onChange={(e) => setProductoEditando({...productoEditando, imagen: e.target.files[0]})}
+              />
             </div>
-            <button className="boton-guardar" onClick={() => handleGuardarProducto(productoEditando)}>
-              Guardar Producto
+            <button className="boton-guardar" onClick={() => productoEditando.id ? handleGuardarProducto(productoEditando) : handleAgregarProducto(productoEditando)}>
+              {productoEditando.id ? 'Guardar Cambios' : 'Agregar Producto'}
             </button>
+            <button className="boton-cancelar" onClick={() => setProductoEditando(null)}>Cancelar</button>
           </div>
         </div>
       )}
     </div>
   );
 }
+
+
+

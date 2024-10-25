@@ -18,7 +18,7 @@ export default function DatosPage() {
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
     { name: 'Análisis', icon: BarChart2, path: '/datos' },
-    { name: 'Configuración', icon: Settings, path: '/configuracion' },
+    { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];
 
