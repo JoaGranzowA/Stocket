@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import RegisterView, LoginView, UserProfileView, LogoutView, ProductosListView, ProductoDetailView, ProductosDisponiblesView, RealizarCompraView, HistorialComprasView, UpdateProfileView, UpdateProfileView
+from .views import RegisterView, LoginView, UserProfileView, LogoutView, ProductosListView, ProductoDetailView, ProductosDisponiblesView, RealizarCompraView, HistorialComprasView, UpdateProfileView, UpdateProfileView, MensajesView, EmpleadosListView, EnviarMensajeView, EmployeesListView, ProveedorProfileView, ProductosMasCompradosView, ProductosDeProveedoresHabitualesView
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
@@ -20,5 +20,17 @@ urlpatterns = [
     # URLs para manejar perfiles
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('profile/update/', UpdateProfileView.as_view(), name='update_profile'),
+
+    # URLs para Chats
+    path('chats/', MensajesView.as_view(), name='mensajes'),
+    path('empleados/', EmpleadosListView.as_view(), name='empleados_list'),
+    path('mensajes/enviar/', EnviarMensajeView.as_view(), name='enviar_mensaje'),
+
+    # URLs para ver proveedores
+    path('employees/', EmployeesListView.as_view(), name='employees_list'),
+    path('proveedor/<int:id>/', ProveedorProfileView.as_view(), name='proveedor-profile'),
     
+    path('recomendaciones/mas-comprados/', ProductosMasCompradosView.as_view(), name='productos-mas-comprados'),
+    path('recomendaciones/proveedores-habituales/', ProductosDeProveedoresHabitualesView.as_view(), name='productos-proveedores-habituales'),
+
 ]

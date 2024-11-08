@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Package, Lightbulb, ShoppingCart, BarChart2, ShoppingBag, Settings, MessageCircle, LogOut, Plus, AlertTriangle } from 'lucide-react';
+import { Home,Users, Package, Lightbulb, ShoppingCart, BarChart2, ShoppingBag, Settings, MessageCircle, LogOut, Plus, AlertTriangle } from 'lucide-react';
 import { ACCESS_TOKEN } from '../constants';
 import "../styles/Productos.css";
 
@@ -60,6 +60,7 @@ export default function ProductosClientes() {
   const navItems = [
     { name: 'Inicio', icon: Home, path: '/vendedor/home' },
     { name: 'Productos', icon: Package, path: '/productos' },
+    { name: 'Proveedores', icon: Users, path: '/proveedores' },
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
     { name: 'Análisis', icon: BarChart2, path: '/analisis' },

@@ -67,6 +67,9 @@
 .navbar {
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .navbar-container {
@@ -130,7 +133,7 @@
   border: none;
   cursor: pointer;
   display: flex;
-  align-items: center;
+  align-items:  center;
   justify-content: center;
   margin-bottom: 1rem;
   font-size: 1rem;

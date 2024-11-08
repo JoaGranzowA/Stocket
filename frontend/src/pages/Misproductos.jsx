@@ -153,15 +153,14 @@ export default function ProductosProveedor() {
   const navItems = [
     { name: 'Inicio', icon: Home, path: '/proveedor/home' },
     { name: 'Mis Productos', icon: Box, path: '/misproductos' },
-    { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/pedidos' },
+    { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
     { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
     { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];
 
   return (
-    <div className="chat-container">
-      {/* Sidebar */}
+    <div className="home-container">
       <aside className="sidebar">
         <div className="logo-container">
           <h1 className="logo">Stocket</h1>
@@ -290,6 +289,5 @@ export default function ProductosProveedor() {
     </div>
   );
 }
-
 
 

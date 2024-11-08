@@ -105,7 +105,7 @@ export default function UserProfile() {
         setEditMode(false);
       })
       .catch((error) => console.error('Error al actualizar el perfil:', error));
-};
+  };
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -114,6 +114,7 @@ export default function UserProfile() {
   const navItemsCustomer = [
     { name: 'Inicio', icon: Home, path: '/vendedor/home' },
     { name: 'Productos', icon: Package, path: '/productos' },
+    { name: 'Proveedores', icon: Users, path: '/proveedores' },
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
     { name: 'Análisis', icon: BarChart2, path: '/analisis' },
@@ -143,24 +144,24 @@ export default function UserProfile() {
   const { user, profile } = userProfile;
 
   return (
-    <div className="chat-container">
+    <div className="home-container">
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="logo-container">
           <h1 className="logo">Stocket</h1>
         </div>
         <nav className="sidebar-nav">
-        {navItems.map((item) => (
-          <button
-            key={item.name}
-            className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
-            onClick={() => navigate(item.path)}
-          >
-            <item.icon className="nav-icon" />
-            {item.name}
-          </button>
-        ))}
-      </nav>
+          {navItems.map((item) => (
+            <button
+              key={item.name}
+              className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
+              onClick={() => navigate(item.path)}
+            >
+              <item.icon className="nav-icon" />
+              {item.name}
+            </button>
+          ))}
+        </nav>
       </aside>
 
       <div className="main-content">

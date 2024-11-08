@@ -16,6 +16,9 @@ import Misproductos from "./pages/Misproductos"
 import Carrito from "./pages/Carrito"
 import Confirmacion from "./pages/Confirmacion"
 import Perfil from "./pages/Perfil"
+import Proveedores from "./pages/Proveedores"
+import ProveedorPerfil from "./pages/ProveedorPerfil"
+import GestionPedidos from "./pages/GestionPedidos"
 
 function Logout() {
   localStorage.clear()
@@ -56,6 +59,28 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/proveedores"
+          element={
+            <ProtectedRoute>
+              <Proveedores />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/gestionpedidos"
+          element={
+            <ProtectedRoute>
+              <GestionPedidos />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/perfil/:id" element={
+          <ProtectedRoute>
+              <ProveedorPerfil />
+            </ProtectedRoute>
+          } 
+          />
         <Route
           path="/misproductos"
           element={

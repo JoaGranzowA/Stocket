@@ -1,7 +1,12 @@
 from rest_framework import serializers
 from .models import Producto
 from django.contrib.auth import get_user_model
-from .models import Compra, DetalleCompra, Profile
+from .models import Compra, DetalleCompra, Profile, Mensaje
+
+class MensajeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Mensaje
+        fields = ['id', 'remitente', 'destinatario', 'contenido', 'timestamp']
 
 class ProductoSimpleSerializer(serializers.ModelSerializer):
     class Meta:

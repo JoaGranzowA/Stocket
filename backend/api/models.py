@@ -40,7 +40,7 @@ class Profile(models.Model):
 
     # Atributos específicos para empleados
     rubro = models.CharField(max_length=255, blank=True, null=True)  # Solo para empleados
-    experiencia = models.PositiveIntegerField(blank=True, null=True)  # Años de experiencia
+    experiencia = models.PositiveIntegerField(blank=True, null=True)  # Años de experiencias
 
     def __str__(self):
         return f'Perfil de {self.user.username}'
@@ -53,5 +53,14 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+class Mensaje(models.Model):
+    remitente = models.ForeignKey(User, related_name='mensajes_enviados', on_delete=models.CASCADE)
+    destinatario = models.ForeignKey(User, related_name='mensajes_recibidos', on_delete=models.CASCADE)
+    contenido = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"De {self.remitente.username} a {self.destinatario.username}"
 
     

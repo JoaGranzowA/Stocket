@@ -1,0 +1,247 @@
+.home-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .logo-container {
+    padding: 20px;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #8b5cf6;
+    margin: 0;
+  }
+  
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #4b5563;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+  }
+  
+  .nav-item:hover {
+    background-color: #f3e8ff;
+  }
+  
+  .nav-item.active {
+    color: #8b5cf6;
+    background-color: #f3e8ff;
+    font-weight: bold;
+  }
+  
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+  }
+  
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .navbar {
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    height: 60px;
+  }
+  
+  .navbar-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1f2937;
+    text-decoration: none;
+  }
+  
+  .page-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px;
+    background-color: #f3f4f6;
+  }
+  
+  .proveedor-perfil-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .proveedor-info-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+  
+  .proveedor-info-section h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  
+  .proveedor-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .proveedor-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 16px;
+    border: 4px solid #8b5cf6;
+  }
+  
+  .proveedor-info h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 8px;
+  }
+  
+  .proveedor-info p {
+    font-size: 16px;
+    color: #4b5563;
+    margin-bottom: 8px;
+  }
+  
+  .contact-button {
+    background-color: #8b5cf6;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 16px;
+  }
+  
+  .contact-button:hover {
+    background-color: #7c3aed;
+  }
+  
+  .proveedor-productos-section {
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 32px;
+  }
+  
+  .proveedor-productos-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 24px;
+    text-align: center;
+    border-bottom: 2px solid #8b5cf6;
+    padding-bottom: 8px;
+  }
+  
+  .productos-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .producto-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .producto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .producto-imagen {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  
+  .producto-card h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 8px;
+  }
+  
+  .producto-card p {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    .home-container {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+      height: auto;
+    }
+  
+    .main-content {
+      height: calc(100vh - 60px);
+    }
+  
+    .proveedor-info-section,
+    .proveedor-productos-section {
+      padding: 16px;
+    }
+  
+    .productos-lista {
+      grid-template-columns: 1fr;
+    }
+  }
+  
