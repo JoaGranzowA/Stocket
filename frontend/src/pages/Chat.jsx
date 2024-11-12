@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, Package, Lightbulb, ShoppingCart, Box, FileText, Settings, LogOut, BarChart2, Send } from 'lucide-react';
+import { Home, Users, Apple, Boxes, Lightbulb, ShoppingCart, Box, FileText, Settings, LogOut, BarChart2, Send, CirclePercent } from 'lucide-react';
 import { ACCESS_TOKEN } from '../constants';
 import '../styles/Chat.css';
 
@@ -16,10 +16,11 @@ export default function Chat() {
 
   const navItemsCustomer = [
     { name: 'Inicio', icon: Home, path: '/vendedor/home' },
-    { name: 'Productos', icon: Package, path: '/productos' },
+    { name: 'Productos', icon: Apple, path: '/productos' },
     { name: 'Proveedores', icon: Users, path: '/proveedores' },
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
+    { name: 'Mi Stock', icon: Boxes, path: '/stock' },
     { name: 'Análisis', icon: BarChart2, path: '/analisis' },
     { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
@@ -28,8 +29,9 @@ export default function Chat() {
   const navItemsEmployee = [
     { name: 'Inicio', icon: Home, path: '/proveedor/home' },
     { name: 'Mis Productos', icon: Box, path: '/misproductos' },
-    { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/pedidos' },
+    { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
     { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
+    { name: 'Ofertar', icon:CirclePercent, path: '/verstock' },
     { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];

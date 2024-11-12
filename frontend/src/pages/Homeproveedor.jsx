@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, LogOut, DollarSign, Bell, Box, FileText } from 'lucide-react';
+import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, LogOut, DollarSign, Bell, Box, FileText, CirclePercent } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Homeproveedor.css"
 
@@ -17,6 +17,7 @@ export default function HomePage() {
     { name: 'Mis Productos', icon: Box, path: '/misproductos' },
     { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
     { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
+    { name: 'Ofertar', icon:CirclePercent, path: '/verstock' },
     { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];

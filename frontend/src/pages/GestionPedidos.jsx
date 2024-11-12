@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, ShoppingCart, Box, FileText, Settings, LogOut, MessageCircle, Check, X } from 'lucide-react';
+import { Home, ShoppingCart, Box, FileText, Settings, LogOut, MessageCircle, Check, X, CirclePercent} from 'lucide-react';
 import "../styles/GestionPedidos.css";
 
 export default function GestionPedidos() {
@@ -37,6 +37,7 @@ export default function GestionPedidos() {
     { name: 'Mis Productos', icon: Box, path: '/misproductos' },
     { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestion-pedidos' },
     { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
+    { name: 'Ofertar', icon:CirclePercent, path: '/verstock' },
     { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, LogOut } from 'lucide-react';
+import { Home, Users, Apple, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, LogOut, Boxes } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import "../styles/Home.css"
 
 
 export default function DatosPage() {
-  const [currentPage, setCurrentPage] = useState('/datos');
+  const [currentPage, setCurrentPage] = useState('/analisis');
   const navigate = useNavigate();
 
   const handleChatClick = () => {
@@ -14,11 +13,12 @@ export default function DatosPage() {
 
   const navItems = [
     { name: 'Inicio', icon: Home, path: '/vendedor/home' },
-    { name: 'Productos', icon: Package, path: '/productos' },
+    { name: 'Productos', icon: Apple, path: '/productos' },
     { name: 'Proveedores', icon: Users, path: '/proveedores' },
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
-    { name: 'Análisis', icon: BarChart2, path: '/datos' },
+    { name: 'Mi Stock', icon: Boxes, path: '/stock' },
+    { name: 'Análisis', icon: BarChart2, path: '/analisis' },
     { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];
@@ -74,8 +74,7 @@ export default function DatosPage() {
       <div className="main-content">
         <header className="navbar">
           <div className="navbar-container">
-            <a href="#" className="navbar-title">
-            </a>
+          <h1 className="navbar-title">Análisis de Ventas</h1>
             <div className="navbar-actions">
               <button className="navbar-button">
                 <MessageCircle className="navbar-icon" onClick={handleChatClick} />
@@ -86,6 +85,8 @@ export default function DatosPage() {
             </div>
           </div>
         </header>
+    
+        
 
         <main className="page-content">
           <div className="content-container">
@@ -126,7 +127,7 @@ export default function DatosPage() {
           display: flex;
           height: 100vh;
           background-color: #f0f0f0;
-          font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+          font-family: Arial, sans-serif;
         }
 
         .sidebar {

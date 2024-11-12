@@ -19,6 +19,8 @@ import Perfil from "./pages/Perfil"
 import Proveedores from "./pages/Proveedores"
 import ProveedorPerfil from "./pages/ProveedorPerfil"
 import GestionPedidos from "./pages/GestionPedidos"
+import Stock from "./pages/Stock"
+import Verstock from "./pages/Verstock"
 
 function Logout() {
   localStorage.clear()
@@ -68,10 +70,26 @@ function App() {
           }
         />
         <Route
+          path="/stock"
+          element={
+            <ProtectedRoute>
+              <Stock />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/gestionpedidos"
           element={
             <ProtectedRoute>
               <GestionPedidos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/verstock"
+          element={
+            <ProtectedRoute>
+              <Verstock />
             </ProtectedRoute>
           }
         />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, LogOut, DollarSign, Bell, Box, FileText, Plus, Edit, Trash2, AlertTriangle, Upload } from 'lucide-react';
+import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, LogOut, DollarSign, Bell, Box, FileText, Plus, Edit, Trash2, AlertTriangle, Upload, CirclePercent} from 'lucide-react';
 import { ACCESS_TOKEN } from '../constants';
 import "../styles/Misproductos.css"
 
@@ -155,6 +155,7 @@ export default function ProductosProveedor() {
     { name: 'Mis Productos', icon: Box, path: '/misproductos' },
     { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
     { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
+    { name: 'Ofertar', icon:CirclePercent, path: '/verstock' },
     { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
   ];

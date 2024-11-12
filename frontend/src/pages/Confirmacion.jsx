@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, ShoppingBag, Settings, MessageCircle, LogOut, Plus, AlertTriangle } from 'lucide-react';
+import { Home, Users, Apple, Boxes, Lightbulb, ShoppingCart, BarChart2, ShoppingBag, Settings, MessageCircle, LogOut, Plus, AlertTriangle } from 'lucide-react';
 import '../styles/Confirmacion.css';
 
 export default function ConfirmacionPedido() {
@@ -22,10 +22,11 @@ export default function ConfirmacionPedido() {
 
   const navItems = [
     { name: 'Inicio', icon: Home, path: '/vendedor/home' },
-    { name: 'Productos', icon: Package, path: '/productos' },
+    { name: 'Productos', icon: Apple, path: '/productos' },
     { name: 'Proveedores', icon: Users, path: '/proveedores' },
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
+    { name: 'Mi Stock', icon: Boxes, path: '/stock' },
     { name: 'Análisis', icon: BarChart2, path: '/analisis' },
     { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },

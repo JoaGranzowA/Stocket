@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, LogOut, Minus, Plus, Trash2 } from 'lucide-react';
+import { Home, Users, Apple, Boxes, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, LogOut, Minus, Plus, Trash2 } from 'lucide-react';
 import { ACCESS_TOKEN } from '../constants';
 import "../styles/Carrito.css"
 
@@ -90,10 +90,11 @@ export default function Carrito() {
 
   const navItems = [
     { name: 'Inicio', icon: Home, path: '/vendedor/home' },
-    { name: 'Productos', icon: Package, path: '/productos' },
+    { name: 'Productos', icon: Apple, path: '/productos' },
     { name: 'Proveedores', icon: Users, path: '/proveedores' },
     { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
     { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
+    { name: 'Mi Stock', icon: Boxes, path: '/stock' },
     { name: 'Análisis', icon: BarChart2, path: '/analisis' },
     { name: 'Configuración', icon: Settings, path: '/perfil' },
     { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },

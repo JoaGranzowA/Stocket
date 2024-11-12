@@ -18,7 +18,7 @@ class DetalleCompraSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DetalleCompra
-        fields = ['producto', 'cantidad', 'precio']
+        fields = ['id', 'compra', 'producto', 'cantidad', 'precio','stock_restante']
 
 
 class CompraSerializer(serializers.ModelSerializer):
@@ -32,7 +32,8 @@ class CompraSerializer(serializers.ModelSerializer):
 class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto
-        fields = ["id", "titulo", "descripcion", "precio", "imagen", "vendedor", "fecha_creacion"]
+        fields = ["id", "titulo", "descripcion", "precio", "imagen", "vendedor", "fecha_creacion", "stock"]
+
 
 User = get_user_model()
 
@@ -50,3 +51,14 @@ class ProfileSerializer(serializers.ModelSerializer):
             'experiencia': {'required': False},
             'foto': {'required': False},
         }
+
+class CustomerWithLowStockSerializer(serializers.ModelSerializer):
+    customer = serializers.CharField(source='compra.customer.username')  # Nombre del cliente
+    customer_id = serializers.IntegerField(source='compra.customer.id')  # ID del cliente
+    producto = serializers.CharField(source='producto.titulo')  # Nombre del producto
+    stock_restante = serializers.IntegerField()
+
+    class Meta:
+        model = DetalleCompra
+        fields = ['customer', 'customer_id', 'producto', 'stock_restante']
+

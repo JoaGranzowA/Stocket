@@ -2,8 +2,7 @@
   display: flex;
   height: 100vh;
   background-color: #f0f0f0;
-  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 .stocket-chat-sidebar {

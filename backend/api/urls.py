@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import RegisterView, LoginView, UserProfileView, LogoutView, ProductosListView, ProductoDetailView, ProductosDisponiblesView, RealizarCompraView, HistorialComprasView, UpdateProfileView, UpdateProfileView, MensajesView, EmpleadosListView, EnviarMensajeView, EmployeesListView, ProveedorProfileView, ProductosMasCompradosView, ProductosDeProveedoresHabitualesView
+from .views import RegisterView, LoginView, UserProfileView, LogoutView, ProductosListView, ProductoDetailView, ProductosDisponiblesView, RealizarCompraView, HistorialComprasView, UpdateProfileView, UpdateProfileView, MensajesView, EmpleadosListView, EnviarMensajeView, EmployeesListView, ProveedorProfileView, ProductosMasCompradosView, ProductosDeProveedoresHabitualesView, ActualizarStockView, StockDisponibleView, ClientesBajoStockView
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
@@ -32,5 +32,10 @@ urlpatterns = [
     
     path('recomendaciones/mas-comprados/', ProductosMasCompradosView.as_view(), name='productos-mas-comprados'),
     path('recomendaciones/proveedores-habituales/', ProductosDeProveedoresHabitualesView.as_view(), name='productos-proveedores-habituales'),
+
+    path('stock-disponible/', StockDisponibleView.as_view(), name='stock_disponible'),
+    path('actualizar-stock/<int:pk>/', ActualizarStockView.as_view(), name='actualizar_stock'),
+
+    path('clientes-bajo-stock/', ClientesBajoStockView.as_view(), name='clientes-bajo-stock'),
 
 ]

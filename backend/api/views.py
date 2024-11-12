@@ -11,10 +11,11 @@ from rest_framework import status
 from django.db import models
 from django.http import JsonResponse
 from .models import Producto, Compra, DetalleCompra, Profile, Mensaje
-from .serializers import ProductoSerializer, CompraSerializer, ProfileSerializer, MensajeSerializer
+from .serializers import ProductoSerializer, CompraSerializer, ProfileSerializer, MensajeSerializer, DetalleCompraSerializer, CustomerWithLowStockSerializer
 import json
 from django.db.models import Q
 from django.db.models import Count
+from django.db import transaction
 
 
 
@@ -167,34 +168,84 @@ class ProductosDisponiblesView(APIView):
 class RealizarCompraView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @transaction.atomic
     def post(self, request):
-        customer = request.user
-        productos_data = request.data.get('productos', [])
-        total = request.data.get('total', 0)
-
+        data = request.data
+        productos_data = data.get('productos', [])
         if not productos_data:
-            return Response({"error": "No hay productos en la compra"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "No se especificaron productos para la compra."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Crear la compra
-        compra = Compra.objects.create(customer=customer, total=total)
+        # Crea la instancia de Compra primero, sin el total
+        compra = Compra.objects.create(customer=request.user, total=0.0)  # Inicialmente establecemos total en 0
+        total_compra = 0  # Inicializar el total
 
-        # Crear los detalles de la compra
         for producto_data in productos_data:
             producto_id = producto_data.get('id')
-            cantidad = producto_data.get('cantidad')
+            cantidad = producto_data.get('cantidad', 1)
+
             try:
                 producto = Producto.objects.get(id=producto_id)
-                DetalleCompra.objects.create(
-                    compra=compra,
-                    producto=producto,
-                    cantidad=cantidad,
-                    precio=producto.precio
-                )
+                if producto.stock < cantidad:
+                    return Response(
+                        {"error": f"No hay suficiente stock para el producto {producto.titulo}."},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                # Reducir el stock del producto
+                producto.stock -= cantidad
+                producto.save()
+
+                # Calcular el precio total para esta cantidad
+                subtotal = producto.precio * cantidad
+                total_compra += subtotal
+
+                # Verificar si ya existe un DetalleCompra para este producto y usuario
+                detalle_compra_existente = DetalleCompra.objects.filter(
+                    compra__customer=request.user, producto=producto, stock_restante__gt=0
+                ).first()
+
+                if detalle_compra_existente:
+                    # Si existe, aumentar el stock_restante
+                    detalle_compra_existente.stock_restante += cantidad
+                    detalle_compra_existente.cantidad += cantidad
+                    detalle_compra_existente.save()
+                else:
+                    # Si no existe, crear un nuevo DetalleCompra
+                    DetalleCompra.objects.create(
+                        compra=compra,
+                        producto=producto,
+                        cantidad=cantidad,
+                        precio=producto.precio,
+                        stock_restante=cantidad  # Asegurarse de que el stock_restante sea igual a la cantidad comprada
+                    )
+
             except Producto.DoesNotExist:
-                return Response({"error": f"Producto con id {producto_id} no encontrado"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": f"Producto con id {producto_id} no encontrado."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Actualizar el total de la compra
+        compra.total = total_compra
+        compra.save()
 
         serializer = CompraSerializer(compra)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+        # Actualizar el total de la compra
+        compra.total = total_compra
+        compra.save()
+
+        serializer = CompraSerializer(compra)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+        # Actualizar el total de la compra
+        compra.total = total_compra
+        compra.save()
+
+        serializer = CompraSerializer(compra)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
     
 class HistorialComprasView(APIView):
     permission_classes = [IsAuthenticated]
@@ -365,3 +416,66 @@ class ProductosDeProveedoresHabitualesView(APIView):
         productos = Producto.objects.filter(vendedor__in=proveedores).distinct()[:10]
         serializer = ProductoSerializer(productos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class StockDisponibleView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = DetalleCompraSerializer
+
+    def get_queryset(self):
+        return DetalleCompra.objects.filter(compra__customer=self.request.user, stock_restante__gt=0)
+
+    
+class ActualizarStockView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        try:
+            detalle = DetalleCompra.objects.get(pk=pk, compra__customer=request.user)
+        except DetalleCompra.DoesNotExist:
+            return Response({"error": "Producto no encontrado o no pertenece al usuario."}, status=status.HTTP_404_NOT_FOUND)
+
+        cantidad_disminuir = request.data.get('cantidad', None)
+        
+        # Validación para asegurarse de que se proporciona la cantidad
+        if cantidad_disminuir is None:
+            return Response({"error": "La cantidad es requerida."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            cantidad_disminuir = int(cantidad_disminuir)
+        except ValueError:
+            return Response({"error": "La cantidad debe ser un número entero."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if cantidad_disminuir <= 0:
+            return Response({"error": "La cantidad a disminuir debe ser mayor a cero."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if detalle.stock_restante < cantidad_disminuir:
+            return Response({"error": "No hay suficiente stock para disminuir la cantidad solicitada."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Actualizar el stock restante
+        detalle.stock_restante -= cantidad_disminuir
+        detalle.save()
+
+        serializer = DetalleCompraSerializer(detalle)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class ClientesBajoStockView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            # Filtra solo los detalles de compra que pertenecen a los productos vendidos por el empleado autenticado
+            productos_vendidos = Producto.objects.filter(vendedor=request.user)
+            detalles_bajo_stock = DetalleCompra.objects.filter(
+                producto__in=productos_vendidos,
+                stock_restante__lt=20
+            ).select_related('compra__customer')
+
+            # Serializar los datos usando el serializador actualizado
+            serializer = CustomerWithLowStockSerializer(detalles_bajo_stock, many=True)
+            data = serializer.data
+
+            return Response(data, status=200)
+        except ValueError as e:
+            # Manejar el error para que sea más informativo
+            return Response({"error": str(e)}, status=400)
+

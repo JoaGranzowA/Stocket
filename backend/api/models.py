@@ -11,10 +11,11 @@ class User(AbstractUser):
 class Producto(models.Model):
     titulo = models.CharField(max_length=100)
     descripcion = models.TextField()
-    precio = models.IntegerField(default=0)  
+    precio = models.IntegerField(default=0)
     imagen = models.ImageField(upload_to='media/', null=True, blank=True)
-    vendedor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='productos')  # Relación con el empleado
+    vendedor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='productos')
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+    stock = models.IntegerField(default=0)  # Nuevo campo para gestionar el stock del producto
 
     def __str__(self):
         return self.titulo
@@ -27,9 +28,14 @@ class Compra(models.Model):
 
 class DetalleCompra(models.Model):
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE, related_name='detalles')
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.PositiveIntegerField()
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='detalles')
+    cantidad = models.IntegerField(default=1)  # Cantidad de productos comprados
+    precio = models.IntegerField()  # Precio del producto al momento de la compra
+    stock_restante = models.IntegerField(default=0)  # Cantidad restante del producto comprado
+
+    def __str__(self):
+        return f'{self.cantidad} x {self.producto.titulo} en Compra {self.compra.id}'
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
@@ -62,5 +68,6 @@ class Mensaje(models.Model):
 
     def __str__(self):
         return f"De {self.remitente.username} a {self.destinatario.username}"
+
 
     
