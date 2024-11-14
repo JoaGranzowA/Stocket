@@ -6,6 +6,19 @@ import Home from "./pages/Home"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Productos from "./pages/Productos"
+import Pedidos from "./pages/Pedidos"
+import Recomendaciones from "./pages/Recomendaciones"
+import Analisis from "./pages/Analisis"
+import Landingpage from "./pages/Landingpage"
+import Chat from "./pages/Chat"
+import Homeproveedor from "./pages/Homeproveedor"
+import Misproductos from "./pages/Misproductos"
+import Carrito from "./pages/Carrito"
+import Confirmacion from "./pages/Confirmacion"
+import Perfil from "./pages/Perfil"
+import Proveedores from "./pages/Proveedores"
+import ProveedorPerfil from "./pages/ProveedorPerfil"
+import GestionPedidos from "./pages/GestionPedidos"
 
 function Logout() {
   localStorage.clear()
@@ -21,11 +34,20 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Landingpage />} />
         <Route
-          path="/"
+          path="/vendedor/home"
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/proveedor/home"
+          element={
+            <ProtectedRoute>
+              <Homeproveedor />
             </ProtectedRoute>
           }
         />
@@ -34,6 +56,92 @@ function App() {
           element={
             <ProtectedRoute>
               <Productos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/proveedores"
+          element={
+            <ProtectedRoute>
+              <Proveedores />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/gestionpedidos"
+          element={
+            <ProtectedRoute>
+              <GestionPedidos />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/perfil/:id" element={
+          <ProtectedRoute>
+              <ProveedorPerfil />
+            </ProtectedRoute>
+          } 
+          />
+        <Route
+          path="/misproductos"
+          element={
+            <ProtectedRoute>
+              <Misproductos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/pedidos"
+          element={
+            <ProtectedRoute>
+              <Pedidos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/recomendaciones"
+          element={
+            <ProtectedRoute>
+              <Recomendaciones />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analisis"
+          element={
+            <ProtectedRoute>
+              <Analisis />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute>
+              <Chat />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/carrito"
+          element={
+            <ProtectedRoute>
+              <Carrito />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/confirmacion"
+          element={
+            <ProtectedRoute>
+              <Confirmacion />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/perfil"
+          element={
+            <ProtectedRoute>
+              <Perfil />
             </ProtectedRoute>
           }
         />
