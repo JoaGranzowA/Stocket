@@ -192,10 +192,9 @@ const styles = {
     alignItems: "center",
     minHeight: "100vh",
     backgroundColor: "#f0f0f0",
-    padding: "2rem",
+    
     boxSizing: "border-box",
-    fontFamily:
-      "'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+    fontFamily: "'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
   },
   card: {
     display: "flex",
@@ -204,50 +203,56 @@ const styles = {
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     borderRadius: "12px",
     overflow: "hidden",
+    flexDirection: "row", // Cambia a columna en pantallas pequeñas
   },
   leftPanel: {
     flex: 1,
     backgroundColor: "#8B5CF6",
     color: "white",
-    padding: "2.5rem",
+    padding: "1rem",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    boxSizing: "border-box",
   },
   rightPanel: {
     flex: 1,
     backgroundColor: "white",
-    padding: "2.5rem",
+    padding: "1rem",
     display: "flex",
     flexDirection: "column",
+    justifyContent: "center",
+    boxSizing: "border-box",
   },
   title: {
-    fontSize: "2rem",
+    fontSize: "1.3rem", // Ajustado en pantallas pequeñas
     fontWeight: "600",
-    marginBottom: "1.5rem",
-    letterSpacing: "-0.025em",
+    marginBottom: "1.3rem",
+    letterSpacing: "-0.023em",
   },
   description: {
-    marginBottom: "1.5rem",
-    fontSize: "1rem",
-    lineHeight: "1.5",
+    marginBottom: "1.3rem",
+    fontSize: "1rem", // Ajustado en pantallas pequeñas
+    lineHeight: "1.3",
   },
   button: {
     backgroundColor: "transparent",
     border: "2px solid white",
     color: "white",
-    padding: "0.75rem 1.5rem",
+    padding: "0.70rem 1rem",
     borderRadius: "8px",
     cursor: "pointer",
-    marginTop: "1.5rem",
-    fontSize: "1rem",
-    fontWeight: "500",
+    marginTop: "1.3rem",
+    fontSize: "1rem", // Ajustado en pantallas pequeñas
+    fontWeight: "300",
     transition: "background-color 0.3s, color 0.3s",
   },
   form: {
     display: "flex",
     flexDirection: "column",
-    gap: "1.25rem",
+    gap: "1.20rem",
     flex: 1,
   },
   inputGroup: {
@@ -264,7 +269,7 @@ const styles = {
     padding: "0.75rem",
     borderRadius: "8px",
     border: "1px solid #D1D5DB",
-    fontSize: "1rem",
+    fontSize: "1rem", // Ajustado en pantallas pequeñas
     transition: "border-color 0.3s",
   },
   checkboxGroup: {
@@ -275,7 +280,7 @@ const styles = {
   checkbox: {
     display: "flex",
     alignItems: "center",
-    gap: "0.5rem",
+    gap: "0.4rem",
   },
   checkboxInput: {
     width: "1.25rem",
@@ -283,7 +288,7 @@ const styles = {
     cursor: "pointer",
   },
   checkboxLabel: {
-    fontSize: "1rem",
+    fontSize: "1rem", // Ajustado en pantallas pequeñas
     color: "#4B5563",
     cursor: "pointer",
   },
@@ -295,7 +300,7 @@ const styles = {
     border: "none",
     cursor: "pointer",
     marginTop: "1.5rem",
-    fontSize: "1rem",
+    fontSize: "1rem", // Ajustado en pantallas pequeñas
     fontWeight: "500",
     transition: "background-color 0.3s",
   },
@@ -308,5 +313,48 @@ const styles = {
     color: "#10B981",
     marginTop: "1rem",
     fontSize: "0.875rem",
+  },
+
+  // Estilos específicos para pantallas de 375px de ancho
+  "@media (max-width: 375px)": {
+    card: {
+      flexDirection: "column", // Cambia el diseño a columna para pantallas pequeñas
+      maxWidth: "100%", // Ocupa todo el ancho
+      margin: "0",
+      padding: "1rem",
+      boxSizing: "border-box",
+    },
+    leftPanel: {
+      padding: "1.5rem",
+      textAlign: "center",
+    },
+    rightPanel: {
+      padding: "1.5rem",
+      alignItems: "center",
+      textAlign: "center",
+    },
+    title: {
+      fontSize: "1.4rem",
+      marginBottom: "1rem",
+    },
+    description: {
+      fontSize: "0.8rem",
+      marginBottom: "1rem",
+    },
+    input: {
+      fontSize: "0.85rem",
+      padding: "0.65rem",
+    },
+    submitButton: {
+      fontSize: "0.85rem",
+      padding: "0.6rem 1rem",
+    },
+    button: {
+      fontSize: "0.85rem",
+      padding: "0.6rem 1rem",
+    },
+    label: {
+      fontSize: "0.7rem",
+    },
   },
 };

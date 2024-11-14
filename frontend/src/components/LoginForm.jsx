@@ -6,8 +6,8 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
 export default function LoginForm({ route, method }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // Añadido
-  const [successMessage, setSuccessMessage] = useState(""); // Añadido
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   const handleRegisterClick = () => {
@@ -19,14 +19,37 @@ export default function LoginForm({ route, method }) {
     setErrorMessage(""); // Limpiar mensajes anteriores
     setSuccessMessage("");
 
+    // Limpiar tokens existentes antes de intentar iniciar sesión
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
+  
     try {
-      const res = await api.post(route, { username, password })
+      // Asegúrate de que la URL esté correctamente configurada.
+      const res = await api.post('/api/login/', { username, password }); 
+  
+      // Imprimir la respuesta para depuración
+      console.log("API response data:", res.data);
+  
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
       setSuccessMessage("Inicio de sesión exitoso");
-      navigate("/")
+  
+      // Verificar si los datos del usuario existen en la respuesta
+      if (res.data && (res.data.is_employee !== undefined || res.data.is_customer !== undefined)) {
+        // Redirigir según el tipo de usuario
+        if (res.data.redirect_url) {
+          navigate(res.data.redirect_url);
+        } else {
+          setErrorMessage("No se pudo determinar la URL de redirección.");
+        }
+      } else {
+        setErrorMessage("No se pudo obtener la información del usuario");
+      }
     } catch (error) {
-      setErrorMessage(error.message || "Error al iniciar sesión");
+      setErrorMessage(error.response?.data?.error || "Error al iniciar sesión");
+      // Si hay un error, limpiar cualquier token existente
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(REFRESH_TOKEN);
     }
   };
 
@@ -63,21 +86,15 @@ export default function LoginForm({ route, method }) {
                 style={styles.input}
               />
             </div>
-            <button type="submit" style={styles.submitButton}>
-              Iniciar sesión
-            </button>
+            <button type="submit" style={styles.submitButton}>Iniciar Sesión</button>
           </form>
           {errorMessage && <p style={styles.errorMessage}>{errorMessage}</p>}
           {successMessage && <p style={styles.successMessage}>{successMessage}</p>}
         </div>
         <div style={styles.rightPanel}>
-          <h2 style={styles.title}>¿Nuevo por aquí?</h2>
-          <p style={styles.description}>
-            Regístrate para crear una cuenta y acceder a todas las funciones
-          </p>
-          <button style={styles.registerButton} onClick={handleRegisterClick}>
-                Crear cuenta
-            </button>
+          <h3>¿Eres nuevo aquí?</h3>
+          <p>Regístrate para crear una cuenta y empezar a usar nuestros servicios.</p>
+          <button onClick={handleRegisterClick} style={styles.registerButton}>Registrarse</button>
         </div>
       </div>
     </div>
@@ -87,13 +104,11 @@ export default function LoginForm({ route, method }) {
 const styles = {
   container: {
     display: "flex",
-    justifyContent: "center",
     alignItems: "center",
-    minHeight: "100vh",
-    backgroundColor: "#f0f0f0",
-    padding: "2rem",
-    boxSizing: "border-box",
-    fontFamily: "'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+    justifyContent: "center",
+    height: "100vh",
+    padding: "1rem",
+    fontFamily: "Inter, sans-serif",
   },
   card: {
     display: "flex",
@@ -102,11 +117,12 @@ const styles = {
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     borderRadius: "12px",
     overflow: "hidden",
+    flexDirection: "row", // Cambia a columna en pantallas pequeñas
   },
   leftPanel: {
     flex: 1,
     backgroundColor: "white",
-    padding: "2.5rem",
+    padding: "1.5rem",
     display: "flex",
     flexDirection: "column",
   },
@@ -114,7 +130,7 @@ const styles = {
     flex: 1,
     backgroundColor: "#8B5CF6",
     color: "white",
-    padding: "2.5rem",
+    padding: "1.5rem",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -128,7 +144,7 @@ const styles = {
     letterSpacing: "-0.025em",
   },
   description: {
-    marginBottom: "1.5rem",
+    marginBottom: "1rem",
     fontSize: "1rem",
     lineHeight: "1.5",
   },
@@ -157,7 +173,7 @@ const styles = {
   submitButton: {
     backgroundColor: "#8B5CF6",
     color: "white",
-    padding: "0.75rem 1.5rem",
+    padding: "0.75rem 1rem",
     borderRadius: "8px",
     border: "none",
     cursor: "pointer",
@@ -169,7 +185,7 @@ const styles = {
     backgroundColor: "transparent",
     border: "2px solid white",
     color: "white",
-    padding: "0.75rem 1.5rem",
+    padding: "0.75rem 1rem",
     borderRadius: "8px",
     cursor: "pointer",
     fontSize: "1rem",
@@ -185,5 +201,48 @@ const styles = {
     color: "#10B981",
     marginTop: "1rem",
     fontSize: "0.875rem",
+  },
+
+  // Estilos específicos para pantallas de 375px de ancho
+  "@media (max-width: 375px)": {
+    card: {
+      flexDirection: "column", // Cambia el diseño a columna para pantallas pequeñas
+      maxWidth: "100%", // Ocupa todo el ancho
+      margin: "0",
+      padding: "1rem",
+      boxSizing: "border-box",
+    },
+    leftPanel: {
+      padding: "1rem",
+      textAlign: "center",
+    },
+    rightPanel: {
+      padding: "1.5rem",
+      alignItems: "center",
+      textAlign: "center",
+    },
+    title: {
+      fontSize: "1.4rem",
+      marginBottom: "1rem",
+    },
+    description: {
+      fontSize: "0.85rem",
+      marginBottom: "1rem",
+    },
+    input: {
+      fontSize: "0.85rem",
+      padding: "0.65rem",
+    },
+    submitButton: {
+      fontSize: "0.85rem",
+      padding: "0.6rem 1.2rem",
+    },
+    registerButton: {
+      fontSize: "0.85rem",
+      padding: "0.6rem 1.2rem",
+    },
+    label: {
+      fontSize: "0.75rem",
+    },
   },
 };

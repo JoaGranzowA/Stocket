@@ -1,0 +1,306 @@
+.stocket-chat-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f0f0f0;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.stocket-chat-sidebar {
+  width: 250px;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.stocket-chat-logo-container {
+  padding: 1rem;
+}
+
+.stocket-chat-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8b5cf6;
+  margin: 0;
+}
+
+.stocket-chat-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+
+.stocket-chat-nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #4b5563;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.stocket-chat-nav-item:hover {
+  background-color: #f3e8ff;
+  color: #8b5cf6;
+}
+
+.stocket-chat-nav-item.active {
+  background-color: #f3e8ff;
+  color: #8b5cf6;
+  font-weight: 600;
+}
+
+.stocket-chat-nav-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+}
+
+.stocket-chat-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.stocket-chat-navbar {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.stocket-chat-navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  height: 3rem;
+}
+
+.stocket-chat-navbar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.stocket-chat-page-content {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #f0f0f0;
+}
+
+.stocket-chat-content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.stocket-chat-interface {
+  display: flex;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  height: calc(100vh - 8rem);
+}
+
+.stocket-chat-conversation-list {
+  width: 300px;
+  border-right: 1px solid #e5e7eb;
+  overflow-y: auto;
+}
+
+.stocket-chat-section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  padding: 1rem;
+  margin: 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.stocket-chat-conversation-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.stocket-chat-conversation-item:hover {
+  background-color: #f3e8ff;
+}
+
+.stocket-chat-conversation-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #8b5cf6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.stocket-chat-conversation-info {
+  flex: 1;
+}
+
+.stocket-chat-conversation-name {
+  font-weight: 600;
+  margin: 0;
+  color: #1f2937;
+}
+
+.stocket-chat-conversation-last-message {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.stocket-chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.stocket-chat-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.stocket-chat-message {
+  max-width: 70%;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  word-wrap: break-word;
+}
+
+.stocket-chat-message.sent {
+  align-self: flex-end;
+  background-color: #8b5cf6;
+  color: white;
+}
+
+.stocket-chat-message.received {
+  align-self: flex-start;
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.stocket-chat-message-content {
+  margin: 0;
+}
+
+.stocket-chat-message-timestamp {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.stocket-chat-input-container {
+  display: flex;
+  padding: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.stocket-chat-input {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+}
+
+.stocket-chat-send-button {
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.stocket-chat-send-button:hover {
+  background-color: #7c3aed;
+}
+
+.stocket-chat-send-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .stocket-chat-container {
+    flex-direction: column;
+  }
+
+  .stocket-chat-sidebar {
+    width: 100%;
+    height: auto;
+  }
+
+  .stocket-chat-main-content {
+    height: calc(100vh - 60px);
+  }
+
+  .stocket-chat-interface {
+    flex-direction: column;
+    height: calc(100vh - 12rem);
+  }
+
+  .stocket-chat-conversation-list {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    max-height: 30vh;
+  }
+
+  .stocket-chat-window {
+    height: 70vh;
+  }
+
+  .stocket-chat-messages {
+    max-height: calc(70vh - 120px);
+  }
+}
+
+@media (max-width: 480px) {
+  .stocket-chat-content-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .stocket-chat-message {
+    max-width: 85%;
+  }
+
+  .stocket-chat-input {
+    font-size: 0.875rem;
+  }
+
+  .stocket-chat-send-button {
+    padding: 0.375rem;
+  }
+
+  .stocket-chat-send-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
