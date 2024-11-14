@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, Package, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, LogOut, DollarSign, Bell, Box, FileText, Plus, Edit, Trash2, AlertTriangle, Upload, CirclePercent} from 'lucide-react';
+import { Home, Users, Apple, Boxes, Lightbulb, ShoppingCart, Box, FileText, Settings, LogOut, BarChart2, MessageCircle, ShoppingBag, CirclePercent, Plus, Edit, Trash2, AlertTriangle } from 'lucide-react';
 import { ACCESS_TOKEN } from '../constants';
 import "../styles/Misproductos.css"
 
@@ -143,81 +143,97 @@ export default function ProductosProveedor() {
 
   const handleNavigation = (path) => {
     setCurrentPage(path);
-    console.log(`Navigating to ${path}`);
+    navigate(path);
   };
 
-  const handleChatClick = () => {
-    console.log("Chat clicked");
-  };
-
-  const navItems = [
-    { name: 'Inicio', icon: Home, path: '/proveedor/home' },
-    { name: 'Mis Productos', icon: Box, path: '/misproductos' },
-    { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
-    { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
-    { name: 'Ofertar', icon:CirclePercent, path: '/verstock' },
-    { name: 'Configuración', icon: Settings, path: '/perfil' },
-    { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+  const sidebarSections = [
+    {
+      title: "Panel de Control",
+      items: [
+        { name: 'Panel Principal', icon: Home, path: '/proveedor/home' },
+        { name: 'Gestión de Productos', icon: Box, path: '/misproductos' },
+        { name: 'Administrar Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
+      ]
+    },
+    {
+      title: "Gestión y Operaciones",
+      items: [
+        { name: 'Resumen Financiero', icon: FileText, path: '/finanzas' },
+        { name: 'Ofertas de Reabastecimiento', icon: CirclePercent, path: '/verstock' },
+      ]
+    },
+    {
+      title: "Configuración",
+      items: [
+        { name: 'Ajustes de Perfil', icon: Settings, path: '/perfil' },
+        { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+      ]
+    }
   ];
 
   return (
-    <div className="home-container">
-      <aside className="sidebar">
-        <div className="logo-container">
-          <h1 className="logo">Stocket</h1>
+    <div className="mp-container">
+      <aside className="mp-sidebar">
+        <div className="mp-logo-container">
+          <h1 className="mp-logo">Stocket</h1>
         </div>
-        <nav className="sidebar-nav">
-        {navItems.map((item) => (
-          <button
-            key={item.name}
-            className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
-            onClick={() => navigate(item.path)}
-          >
-            <item.icon className="nav-icon" />
-            {item.name}
-          </button>
-        ))}
-      </nav>
+        <nav className="mp-sidebar-nav">
+          {sidebarSections.map((section, index) => (
+            <div key={index} className="mp-nav-section">
+              <h2 className="mp-nav-section-title">{section.title}</h2>
+              {section.items.map((item) => (
+                <button
+                  key={item.name}
+                  className={`mp-nav-item ${currentPage === item.path ? 'mp-active' : ''}`}
+                  onClick={() => handleNavigation(item.path)}
+                >
+                  <item.icon className="mp-nav-icon" />
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          ))}
+        </nav>
       </aside>
 
-      <div className="main-content">
-        <header className="navbar">
-          <div className="navbar-container">
-            <a href="#" className="navbar-title">
-              Mis Productos
-            </a>
-            <div className="navbar-actions">
-              <button className="navbar-button" onClick={handleChatClick}>
-                <MessageCircle className="navbar-icon" />
+      <div className="mp-main-content">
+        <header className="mp-navbar">
+          <div className="mp-navbar-container">
+            <h1 className="mp-navbar-title"></h1>
+            <div className="mp-navbar-actions">
+              <button className="mp-navbar-button" onClick={() => navigate("/chat")}>
+                <MessageCircle className="mp-navbar-icon" />
+              </button>
+              <button className="mp-navbar-button" onClick={() => navigate("/carrito")}>
               </button>
             </div>
           </div>
         </header>
 
-        <main className="page-content">
-          <div className="content-container">
-            <h2 className="title">Gestión de Productos</h2>
-            <button className="boton-agregar" onClick={() => setProductoEditando({ id: null, titulo: '', precio: 0, stock: 0, descripcion: '', imagen: null })}>
+        <main className="mp-page-content">
+          <div className="mp-content-container">
+            <h2 className="mp-title">Gestión de Productos</h2>
+            <button className="mp-boton-agregar" onClick={() => setProductoEditando({ id: null, titulo: '', precio: 0, stock: 0, descripcion: '', imagen: null })}>
               <Plus size={20} style={{ marginRight: '0.5rem' }} />
               Agregar Producto
             </button>
-            <div className="productos-grid">
+            <div className="mp-productos-grid">
               {productos.map(producto => (
-                <div key={producto.id} className="producto-card">
-                  {producto.imagen && <img src={`http://localhost:8000${producto.imagen}`} alt={producto.titulo} className="producto-imagen" />}
-                  <h3 className="producto-nombre">{producto.titulo}</h3>
-                  <p className="producto-precio">Precio: ${producto.precio.toFixed(2)}</p>
-                  <p className="producto-stock">
+                <div key={producto.id} className="mp-producto-card">
+                  {producto.imagen && <img src={`http://localhost:8000${producto.imagen}`} alt={producto.titulo} className="mp-producto-imagen" />}
+                  <h3 className="mp-producto-nombre">{producto.titulo}</h3>
+                  <p className="mp-producto-precio">Precio: ${producto.precio.toFixed(2)}</p>
+                  <p className="mp-producto-stock">
                     Stock: {producto.stock}
                     {producto.stock < 20 && (
                       <AlertTriangle size={16} color="#ef4444" style={{ marginLeft: '0.5rem', verticalAlign: 'middle' }} />
                     )}
                   </p>
-                  <div className="producto-acciones">
-                    <button className="boton-accion boton-editar" onClick={() => setProductoEditando(producto)}>
+                  <div className="mp-producto-acciones">
+                    <button className="mp-boton-accion mp-boton-editar" onClick={() => setProductoEditando(producto)}>
                       <Edit size={20} />
                     </button>
-                    <button className="boton-accion boton-eliminar" onClick={() => handleEliminarProducto(producto.id)}>
+                    <button className="mp-boton-accion mp-boton-eliminar" onClick={() => handleEliminarProducto(producto.id)}>
                       <Trash2 size={20} />
                     </button>
                   </div>
@@ -229,66 +245,64 @@ export default function ProductosProveedor() {
       </div>
 
       {productoEditando && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3 className="title">{productoEditando.id ? 'Editar Producto' : 'Agregar Producto'}</h3>
-            <div className="form-group">
-              <label className="label" htmlFor="titulo">Nombre</label>
+        <div className="mp-modal-overlay">
+          <div className="mp-modal-content">
+            <h3 className="mp-title">{productoEditando.id ? 'Editar Producto' : 'Agregar Producto'}</h3>
+            <div className="mp-form-group">
+              <label className="mp-label" htmlFor="titulo">Nombre</label>
               <input
-                className="input"
+                className="mp-input"
                 type="text"
                 id="titulo"
                 value={productoEditando.titulo}
                 onChange={(e) => setProductoEditando({...productoEditando, titulo: e.target.value})}
               />
             </div>
-            <div className="form-group">
-              <label className="label" htmlFor="precio">Precio</label>
+            <div className="mp-form-group">
+              <label className="mp-label" htmlFor="precio">Precio</label>
               <input
-                className="input"
+                className="mp-input"
                 type="number"
                 id="precio"
                 value={productoEditando.precio}
                 onChange={(e) => setProductoEditando({...productoEditando, precio: parseFloat(e.target.value)})}
               />
             </div>
-            <div className="form-group">
-              <label className="label" htmlFor="stock">Stock</label>
+            <div className="mp-form-group">
+              <label className="mp-label" htmlFor="stock">Stock</label>
               <input
-                className="input"
+                className="mp-input"
                 type="number"
                 id="stock"
                 value={productoEditando.stock}
                 onChange={(e) => setProductoEditando({...productoEditando, stock: parseInt(e.target.value)})}
               />
             </div>
-            <div className="form-group">
-              <label className="label" htmlFor="descripcion">Descripción</label>
+            <div className="mp-form-group">
+              <label className="mp-label" htmlFor="descripcion">Descripción</label>
               <textarea
-                className="textarea"
+                className="mp-textarea"
                 id="descripcion"
                 value={productoEditando.descripcion}
                 onChange={(e) => setProductoEditando({...productoEditando, descripcion: e.target.value})}
               />
             </div>
-            <div className="form-group">
-              <label className="label" htmlFor="imagen">Imagen</label>
+            <div className="mp-form-group">
+              <label className="mp-label" htmlFor="imagen">Imagen</label>
               <input
-                className="input"
+                className="mp-input"
                 type="file"
                 id="imagen"
                 onChange={(e) => setProductoEditando({...productoEditando, imagen: e.target.files[0]})}
               />
             </div>
-            <button className="boton-guardar" onClick={() => productoEditando.id ? handleGuardarProducto(productoEditando) : handleAgregarProducto(productoEditando)}>
+            <button className="mp-boton-guardar" onClick={() => productoEditando.id ? handleGuardarProducto(productoEditando) : handleAgregarProducto(productoEditando)}>
               {productoEditando.id ? 'Guardar Cambios' : 'Agregar Producto'}
             </button>
-            <button className="boton-cancelar" onClick={() => setProductoEditando(null)}>Cancelar</button>
+            <button className="mp-boton-cancelar" onClick={() => setProductoEditando(null)}>Cancelar</button>
           </div>
         </div>
       )}
     </div>
   );
 }
-
-

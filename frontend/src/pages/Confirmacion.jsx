@@ -20,16 +20,30 @@ export default function ConfirmacionPedido() {
     navigate(path);
   };
 
-  const navItems = [
-    { name: 'Inicio', icon: Home, path: '/vendedor/home' },
-    { name: 'Productos', icon: Apple, path: '/productos' },
-    { name: 'Proveedores', icon: Users, path: '/proveedores' },
-    { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
-    { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
-    { name: 'Mi Stock', icon: Boxes, path: '/stock' },
-    { name: 'Análisis', icon: BarChart2, path: '/analisis' },
-    { name: 'Configuración', icon: Settings, path: '/perfil' },
-    { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+  const sidebarSections = [
+    {
+      title: "Panel de Control",
+      items: [
+        { name: 'Panel Principal', icon: Home, path: '/vendedor/home' },
+        { name: 'Catálogo de Productos', icon: Apple, path: '/productos' },
+        { name: 'Nuestros Proveedores', icon: Users, path: '/proveedores' },
+      ]
+    },
+    {
+      title: "Gestión y Operaciones",
+      items: [
+        { name: 'Mis Pedidos', icon: ShoppingCart, path: '/pedidos' },
+        { name: 'Reportes de Ventas', icon: BarChart2, path: '/analisis' },
+        { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
+      ]
+    },
+    {
+      title: "Configuración",
+      items: [
+        { name: 'Ajustes de Perfil', icon: Settings, path: '/perfil' },
+        { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+      ]
+    }
   ];
 
   return (
@@ -38,16 +52,22 @@ export default function ConfirmacionPedido() {
         <div className="confirmacion-logo-container">
           <h1 className="confirmacion-logo">Stocket</h1>
         </div>
+        
         <nav className="confirmacion-sidebar-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              className={`confirmacion-nav-item ${currentPage === item.path ? 'confirmacion-active' : ''}`}
-              onClick={() => handleNavigation(item.path)}
-            >
-              <item.icon className="confirmacion-nav-icon" />
-              {item.name}
-            </button>
+          {sidebarSections.map((section, index) => (
+            <div key={index} className="confirmacion-nav-section">
+              <h2 className="confirmacion-nav-section-title">{section.title}</h2>
+              {section.items.map((item) => (
+                <button
+                  key={item.name}
+                  className={`confirmacion-nav-item ${currentPage === item.path ? 'confirmacion-active' : ''}`}
+                  onClick={() => handleNavigation(item.path)}
+                >
+                  <item.icon className="confirmacion-nav-icon" />
+                  {item.name}
+                </button>
+              ))}
+            </div>
           ))}
         </nav>
       </aside>
@@ -56,7 +76,6 @@ export default function ConfirmacionPedido() {
         <header className="confirmacion-navbar">
           <div className="confirmacion-navbar-container">
             <a href="#" className="confirmacion-navbar-title">
-              Confirmación del Pedido
             </a>
           </div>
         </header>
@@ -96,4 +115,3 @@ export default function ConfirmacionPedido() {
     </div>
   );
 }
-

@@ -2,7 +2,6 @@ import react from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
-import Home from "./pages/Home"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Productos from "./pages/Productos"
@@ -21,6 +20,9 @@ import ProveedorPerfil from "./pages/ProveedorPerfil"
 import GestionPedidos from "./pages/GestionPedidos"
 import Stock from "./pages/Stock"
 import Verstock from "./pages/Verstock"
+import ProductoDetalle from "./pages/ProductoDetalle"
+import DetallePedido from "./pages/DetallePedido"
+import Finanzas from "./pages/finanzas"
 
 function Logout() {
   localStorage.clear()
@@ -41,7 +43,7 @@ function App() {
           path="/vendedor/home"
           element={
             <ProtectedRoute>
-              <Home />
+              <Stock />
             </ProtectedRoute>
           }
         />
@@ -62,18 +64,18 @@ function App() {
           }
         />
         <Route
-          path="/proveedores"
+          path="/producto/:id"
           element={
             <ProtectedRoute>
-              <Proveedores />
+              <ProductoDetalle  />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/stock"
+          path="/proveedores"
           element={
             <ProtectedRoute>
-              <Stock />
+              <Proveedores />
             </ProtectedRoute>
           }
         />
@@ -93,6 +95,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/pedidos/:pedidoId"
+          element={
+            <ProtectedRoute>
+              <DetallePedido />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/perfil/:id" element={
           <ProtectedRoute>
               <ProveedorPerfil />
@@ -104,6 +114,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Misproductos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/finanzas"
+          element={
+            <ProtectedRoute>
+              <Finanzas />
             </ProtectedRoute>
           }
         />

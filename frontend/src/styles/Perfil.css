@@ -1,37 +1,56 @@
-.home-container {
+.perfil-home-container {
   display: flex;
   height: 100vh;
   background-color: #f0f0f0;
   font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
-.sidebar {
+.perfil-sidebar {
   width: 250px;
   background-color: white;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
-.logo-container {
-  padding: 1rem;
+.perfil-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0.5rem;
 }
 
-.logo {
-  font-size: 1.5rem;
+.perfil-logo {
+  font-size: 2.25rem;
   font-weight: bold;
   color: #8b5cf6;
   margin: 0;
 }
 
-.sidebar-nav {
+.perfil-sidebar-nav {
   display: flex;
   flex-direction: column;
-  padding-top: 1rem;
+  padding: 1rem 0;
 }
 
-.nav-item {
+.perfil-nav-section {
+  margin-bottom: 1.5rem;
+}
+
+.perfil-nav-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.perfil-nav-item {
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
@@ -43,38 +62,38 @@
   cursor: pointer;
   width: 100%;
   text-align: left;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
-.nav-item:hover {
+.perfil-nav-item:hover {
   background-color: #f3e8ff;
 }
 
-.nav-item.active {
+.perfil-nav-item.perfil-active {
   color: #8b5cf6;
   background-color: #f3e8ff;
   font-weight: 600;
 }
 
-.nav-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.75rem;
+.perfil-nav-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.85rem;
 }
 
-.main-content {
+.perfil-main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.navbar {
+.perfil-navbar {
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-container {
+.perfil-navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -82,33 +101,55 @@
   height: 3rem;
 }
 
-.navbar-title {
+.perfil-navbar-title {
   font-size: 1.25rem;
   font-weight: 600;
   color: #1f2937;
   text-decoration: none;
 }
 
-.page-content {
+.perfil-navbar-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.perfil-navbar-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4b5563;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.perfil-navbar-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.perfil-page-content {
   flex: 1;
   overflow-y: auto;
   background-color: #f0f0f0;
   padding: 2rem;
 }
 
-.content-container {
+.perfil-content-container {
   max-width: 800px;
   margin: 0 auto;
 }
 
-.user-profile-container {
+.perfil-user-profile-container {
   background-color: #ffffff;
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 2rem;
 }
 
-.user-profile-container h1 {
+.perfil-user-profile-container h1 {
   font-size: 2rem;
   font-weight: 700;
   color: #6b46c1;
@@ -116,21 +157,21 @@
   text-align: center;
 }
 
-.profile-card {
+.perfil-profile-card {
   background-color: #ffffff;
   border-radius: 0.75rem;
   padding: 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.profile-header {
+.perfil-profile-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 2rem;
 }
 
-.profile-photo {
+.perfil-profile-photo {
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -139,27 +180,27 @@
   border: 4px solid #8b5cf6;
 }
 
-.profile-photo img {
+.perfil-profile-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.profile-header h2 {
+.perfil-profile-header h2 {
   font-size: 1.5rem;
   font-weight: 600;
   color: #4a5568;
   margin: 0;
 }
 
-.profile-info, .profile-details {
+.perfil-profile-info, .perfil-profile-details {
   background-color: #f3e8ff;
   border-radius: 0.5rem;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
-.profile-info h3, .profile-details h3 {
+.perfil-profile-info h3, .perfil-profile-details h3 {
   font-size: 1.25rem;
   font-weight: 600;
   color: #6b46c1;
@@ -168,17 +209,17 @@
   padding-bottom: 0.5rem;
 }
 
-.profile-info p, .profile-details p {
+.perfil-profile-info p, .perfil-profile-details p {
   margin-bottom: 0.75rem;
   color: #4a5568;
 }
 
-.profile-info p strong, .profile-details p strong {
+.perfil-profile-info p strong, .perfil-profile-details p strong {
   color: #4a5568;
   font-weight: 600;
 }
 
-.edit-profile-button, .save-profile-button, .cancel-edit-button {
+.perfil-edit-profile-button, .perfil-save-profile-button, .perfil-cancel-edit-button {
   background-color: #8b5cf6;
   color: white;
   border: none;
@@ -190,20 +231,20 @@
   transition: background-color 0.3s;
 }
 
-.edit-profile-button:hover, .save-profile-button:hover {
+.perfil-edit-profile-button:hover, .perfil-save-profile-button:hover {
   background-color: #7c3aed;
 }
 
-.cancel-edit-button {
+.perfil-cancel-edit-button {
   background-color: #ef4444;
   margin-left: 0.5rem;
 }
 
-.cancel-edit-button:hover {
+.perfil-cancel-edit-button:hover {
   background-color: #dc2626;
 }
 
-.edit-profile-form {
+.perfil-edit-profile-form {
   display: flex;
   flex-direction: column;
   background-color: #f3e8ff;
@@ -211,7 +252,7 @@
   padding: 1.5rem;
 }
 
-.edit-profile-form h2 {
+.perfil-edit-profile-form h2 {
   font-size: 1.5rem;
   font-weight: 600;
   color: #6b46c1;
@@ -219,14 +260,14 @@
   text-align: center;
 }
 
-.edit-profile-form label {
+.perfil-edit-profile-form label {
   margin-top: 1rem;
   margin-bottom: 0.25rem;
   font-weight: 600;
   color: #4a5568;
 }
 
-.edit-profile-form input, .edit-profile-form textarea {
+.perfil-edit-profile-form input, .perfil-edit-profile-form textarea {
   padding: 0.75rem;
   border: 1px solid #d6bcfa;
   border-radius: 0.25rem;
@@ -235,61 +276,60 @@
   transition: border-color 0.3s;
 }
 
-.edit-profile-form input:focus, .edit-profile-form textarea:focus {
+.perfil-edit-profile-form input:focus, .perfil-edit-profile-form textarea:focus {
   outline: none;
   border-color: #8b5cf6;
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5);
 }
 
-.edit-profile-form textarea {
+.perfil-edit-profile-form textarea {
   min-height: 100px;
   resize: vertical;
 }
 
-.button-group {
+.perfil-button-group {
   display: flex;
   justify-content: flex-end;
   margin-top: 1.5rem;
 }
 
 @media (max-width: 768px) {
-  .home-container {
+  .perfil-home-container {
     flex-direction: column;
   }
 
-  .sidebar {
+  .perfil-sidebar {
     width: 100%;
     height: auto;
   }
 
-  .main-content {
+  .perfil-main-content {
     height: calc(100vh - 60px);
   }
 
-  .content-container {
+  .perfil-content-container {
     padding: 1rem;
   }
 
-  .user-profile-container {
+  .perfil-user-profile-container {
     padding: 1rem;
   }
 
-  .profile-card {
+  .perfil-profile-card {
     padding: 1rem;
   }
 
-  .profile-photo {
+  .perfil-profile-photo {
     width: 120px;
     height: 120px;
   }
 
-  .button-group {
+  .perfil-button-group {
     flex-direction: column;
   }
 
-  .cancel-edit-button {
+  .perfil-cancel-edit-button {
     margin-left: 0;
     margin-top: 0.5rem;
   }
 }
-  

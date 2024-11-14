@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, Apple, Boxes, Lightbulb, ShoppingCart, Box, FileText, Settings, LogOut, BarChart2, MessageCircle, ShoppingBag, Send,CirclePercent } from 'lucide-react';
+import { Home, Users, Apple, Boxes, Lightbulb, ShoppingCart, Box, FileText, Settings, LogOut, BarChart2, MessageCircle, ShoppingBag, CirclePercent } from 'lucide-react';
 import { ACCESS_TOKEN } from '../constants';
 import "../styles/Perfil.css";
 
@@ -17,6 +17,7 @@ export default function UserProfile() {
     foto: null,
   });
   const [loading, setLoading] = useState(true);
+  const [carrito, setCarrito] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,6 +57,9 @@ export default function UserProfile() {
         console.error('Error al cargar el perfil del usuario:', error);
         setLoading(false);
       });
+
+    const carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
+    setCarrito(carritoGuardado);
   }, [navigate]);
 
   const handleInputChange = (e) => {
@@ -75,16 +79,16 @@ export default function UserProfile() {
     formData.append('descripcion', profileData.descripcion);
 
     if (userProfile.user.is_employee) {
-        if (profileData.rubro) {
-            formData.append('rubro', profileData.rubro);
-        }
-        if (profileData.experiencia) {
-            formData.append('experiencia', profileData.experiencia);
-        }
+      if (profileData.rubro) {
+        formData.append('rubro', profileData.rubro);
+      }
+      if (profileData.experiencia) {
+        formData.append('experiencia', profileData.experiencia);
+      }
     }
 
     if (profileData.foto instanceof File) {
-        formData.append('foto', profileData.foto);
+      formData.append('foto', profileData.foto);
     }
 
     fetch('http://localhost:8000/api/profile/update/', {
@@ -108,32 +112,64 @@ export default function UserProfile() {
   };
 
   const handleNavigation = (path) => {
+    setCurrentPage(path);
     navigate(path);
   };
 
-  const navItemsCustomer = [
-    { name: 'Inicio', icon: Home, path: '/vendedor/home' },
-    { name: 'Productos', icon: Apple, path: '/productos' },
-    { name: 'Proveedores', icon: Users, path: '/proveedores' },
-    { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
-    { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
-    { name: 'Mi Stock', icon: Boxes, path: '/stock' },
-    { name: 'Análisis', icon: BarChart2, path: '/analisis' },
-    { name: 'Configuración', icon: Settings, path: '/perfil' },
-    { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
-  ];
+  const handleVerCarrito = () => {
+    navigate('/carrito');
+  };
 
-  const navItemsEmployee = [
-    { name: 'Inicio', icon: Home, path: '/proveedor/home' },
-    { name: 'Mis Productos', icon: Box, path: '/misproductos' },
-    { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/pedidos' },
-    { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
-    { name: 'Ofertar', icon:CirclePercent, path: '/verstock' },
-    { name: 'Configuración', icon: Settings, path: '/perfil' },
-    { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
-  ];
-
-  const navItems = userProfile?.user?.is_employee ? navItemsEmployee : navItemsCustomer;
+  const sidebarSections = userProfile?.user?.is_employee
+    ? [
+        {
+          title: "Panel de Control",
+          items: [
+            { name: 'Panel Principal', icon: Home, path: '/proveedor/home' },
+            { name: 'Gestión de Productos', icon: Box, path: '/misproductos' },
+            { name: 'Administrar Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
+          ]
+        },
+        {
+          title: "Gestión y Operaciones",
+          items: [
+            { name: 'Resumen Financiero', icon: FileText, path: '/finanzas' },
+            { name: 'Ofertas de Reabastecimiento', icon: CirclePercent, path: '/verstock' },
+          ]
+        },
+        {
+          title: "Configuración",
+          items: [
+            { name: 'Ajustes de Perfil', icon: Settings, path: '/perfil' },
+            { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+          ]
+        }
+      ]
+    : [
+      {
+        title: "Panel de Control",
+        items: [
+          { name: 'Panel Principal', icon: Home, path: '/vendedor/home' },
+          { name: 'Catálogo de Productos', icon: Apple, path: '/productos' },
+          { name: 'Nuestros Proveedores', icon: Users, path: '/proveedores' },
+        ]
+      },
+      {
+        title: "Gestión y Operaciones",
+        items: [
+          { name: 'Mis Pedidos', icon: ShoppingCart, path: '/pedidos' },
+          { name: 'Reportes de Ventas', icon: BarChart2, path: '/analisis' },
+          { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
+        ]
+      },
+      {
+        title: "Configuración",
+        items: [
+          { name: 'Ajustes de Perfil', icon: Settings, path: '/perfil' },
+          { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+        ]
+      }
+      ];
 
   if (loading) {
     return <p>Cargando...</p>;
@@ -146,56 +182,67 @@ export default function UserProfile() {
   const { user, profile } = userProfile;
 
   return (
-    <div className="home-container">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="logo-container">
-          <h1 className="logo">Stocket</h1>
+    <div className="perfil-home-container">
+      <aside className="perfil-sidebar">
+        <div className="perfil-logo-container">
+          <h1 className="perfil-logo">Stocket</h1>
         </div>
-        <nav className="sidebar-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
-              onClick={() => navigate(item.path)}
-            >
-              <item.icon className="nav-icon" />
-              {item.name}
-            </button>
+        <nav className="perfil-sidebar-nav">
+          {sidebarSections.map((section, index) => (
+            <div key={index} className="perfil-nav-section">
+              <h2 className="perfil-nav-section-title">{section.title}</h2>
+              {section.items.map((item) => (
+                <button
+                  key={item.name}
+                  className={`perfil-nav-item ${currentPage === item.path ? 'perfil-active' : ''}`}
+                  onClick={() => handleNavigation(item.path)}
+                >
+                  <item.icon className="perfil-nav-icon" />
+                  {item.name}
+                </button>
+              ))}
+            </div>
           ))}
         </nav>
       </aside>
 
-      <div className="main-content">
-        <header className="navbar">
-          <div className="navbar-container">
-            <a href="#" className="navbar-title">
-              Perfil del Usuario
-            </a>
+      <div className="perfil-main-content">
+        <header className="perfil-navbar">
+          <div className="perfil-navbar-container">
+            <h1 className="perfil-navbar-title">
+              
+            </h1>
+            <div className="perfil-navbar-actions">
+              <button className="perfil-navbar-button" onClick={() => navigate("/chat")}>
+                <MessageCircle className="perfil-navbar-icon" />
+              </button>
+              <button className="perfil-navbar-button" onClick={handleVerCarrito}>
+              </button>
+            </div>
           </div>
         </header>
 
-        <main className="page-content">
-          <div className="content-container">
-            <div className="user-profile-container">
+        <main className="perfil-page-content">
+          <div className="perfil-content-container">
+            <div className="perfil-user-profile-container">
               <h1>Perfil del Usuario</h1>
-              <div className="profile-card">
+              <div className="perfil-profile-card">
                 {!editMode ? (
                   <>
-                    <div className="profile-header">
+                    <div className="perfil-profile-header">
                       {profile && profile.foto && (
-                        <div className="profile-photo">
+                        <div className="perfil-profile-photo">
                           <img src={`http://localhost:8000${profile.foto}`} alt="Foto de perfil" />
                         </div>
                       )}
                       <h2>{user.username}</h2>
                     </div>
-                    <div className="profile-info">
+                    <div className="perfil-profile-info">
                       <h3>Información del Usuario</h3>
                       <p><strong>Email:</strong> {user.email}</p>
                     </div>
                     {profile && (
-                      <div className="profile-details">
+                      <div className="perfil-profile-details">
                         <h3>Detalles del Perfil</h3>
                         <p><strong>Ubicación:</strong> {profile.ubicacion || 'No especificada'}</p>
                         <p><strong>Número de Contacto:</strong> {profile.numero_contacto || 'No especificado'}</p>
@@ -208,13 +255,13 @@ export default function UserProfile() {
                         )}
                       </div>
                     )}
-                    <button onClick={() => setEditMode(true)} className="edit-profile-button">
+                    <button onClick={() => setEditMode(true)} className="perfil-edit-profile-button">
                       Editar Perfil
                     </button>
                   </>
                 ) : (
                   <>
-                    <div className="edit-profile-form">
+                    <div className="perfil-edit-profile-form">
                       <h2>Editar Perfil</h2>
                       <label>Foto de Perfil:</label>
                       <input type="file" name="foto" onChange={handleFileChange} />
@@ -238,11 +285,11 @@ export default function UserProfile() {
                         </>
                       )}
                       
-                      <div className="button-group">
-                        <button onClick={handleSaveProfile} className="save-profile-button">
+                      <div className="perfil-button-group">
+                        <button onClick={handleSaveProfile} className="perfil-save-profile-button">
                           Guardar Cambios
                         </button>
-                        <button onClick={() => setEditMode(false)} className="cancel-edit-button">
+                        <button onClick={() => setEditMode(false)} className="perfil-cancel-edit-button">
                           Cancelar
                         </button>
                       </div>

@@ -1,36 +1,55 @@
-.home-container {
+.pedidos-home-container {
   display: flex;
   height: 100vh;
   background-color: #f0f0f0;
   font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
-.sidebar {
+.pedidos-sidebar {
   width: 250px;
   background-color: white;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
 }
 
-.logo-container {
-  padding: 1rem;
+.pedidos-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0.5rem;
 }
 
-.logo {
-  font-size: 1.5rem;
+.pedidos-logo {
+  font-size: 2.25rem;
   font-weight: bold;
   color: #8b5cf6;
   margin: 0;
 }
 
-.sidebar-nav {
+.pedidos-sidebar-nav {
   display: flex;
   flex-direction: column;
-  padding-top: 1rem;
+  padding: 1rem 0;
 }
 
-.nav-item {
+.pedidos-nav-section {
+  margin-bottom: 1.5rem;
+}
+
+.pedidos-nav-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.pedidos-nav-item {
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
@@ -42,38 +61,38 @@
   cursor: pointer;
   width: 100%;
   text-align: left;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
-.nav-item:hover {
+.pedidos-nav-item:hover {
   background-color: #f3e8ff;
 }
 
-.nav-item.active {
+.pedidos-nav-item.pedidos-active {
   color: #8b5cf6;
   background-color: #f3e8ff;
   font-weight: 600;
 }
 
-.nav-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.75rem;
+.pedidos-nav-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.85rem;
 }
 
-.main-content {
+.pedidos-main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.navbar {
+.pedidos-navbar {
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-container {
+.pedidos-navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -81,34 +100,71 @@
   height: 3rem;
 }
 
-.navbar-title {
+.pedidos-navbar-title {
   font-size: 1.25rem;
   font-weight: 600;
   color: #1f2937;
   text-decoration: none;
 }
 
-.page-content {
+.pedidos-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pedidos-navbar-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #4b5563;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.3s;
+}
+
+.pedidos-navbar-button:hover {
+  background-color: #f3f4f6;
+}
+
+.pedidos-navbar-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.pedidos-carrito-count {
+  background-color: #8b5cf6;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  margin-left: 0.5rem;
+}
+
+.pedidos-page-content {
   flex: 1;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: #f3e5f5;
+  background-color: #f0f0f0;
   padding: 2rem;
 }
 
-.content-container {
-  max-width: 800px;
+.pedidos-content-container {
+  max-width: 1000px;
   margin: 0 auto;
 }
 
-.title {
+.pedidos-title {
   font-size: 1.875rem;
   font-weight: 600;
-  color: #4a148c;
+  color: black;
   margin-bottom: 1.5rem;
 }
 
-.historial-vacio {
+.pedidos-historial-vacio {
   text-align: center;
   font-size: 1.125rem;
   color: #6a1b9a;
@@ -118,121 +174,98 @@
   border-radius: 0.5rem;
 }
 
-.historial-pedidos {
+.pedidos-historial-pedidos {
   background-color: white;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
 }
 
-.lista-pedidos {
+.pedidos-lista-pedidos {
   list-style-type: none;
   padding: 0;
 }
 
-.pedido-item {
+.pedidos-pedido-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid #e1bee7;
   padding: 1.5rem 0;
 }
 
-.pedido-item:last-child {
+.pedidos-pedido-item:last-child {
   border-bottom: none;
 }
 
-.pedido-detalles {
-  background-color: #f3e5f5;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
+.pedidos-pedido-detalles {
+  flex: 1;
 }
 
-.pedido-detalles h3 {
+.pedidos-pedido-detalles h3 {
   font-size: 1.25rem;
   font-weight: 600;
   color: #4a148c;
   margin-bottom: 0.5rem;
 }
 
-.pedido-detalles p {
+.pedidos-pedido-detalles p {
   color: #6a1b9a;
   margin-bottom: 0.25rem;
 }
 
-.productos-pedido {
-  margin-top: 1rem;
-}
-
-.productos-pedido h4 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #4a148c;
-  margin-bottom: 0.5rem;
-  background-color: #e1bee7;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-}
-
-.productos-pedido ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.producto-detalle {
+.pedidos-ver-detalle-button {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0.5rem;
-  border-bottom: 1px solid #e1bee7;
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.producto-detalle:hover {
-  background-color: #f3e5f5;
+.pedidos-ver-detalle-button:hover {
+  background-color: #7c3aed;
 }
 
-.producto-detalle:last-child {
-  border-bottom: none;
-}
-
-.detalle-titulo {
-  font-weight: 600;
-  color: #4a148c;
-  flex: 2;
-}
-
-.detalle-cantidad, .detalle-precio {
-  color: #6a1b9a;
-  flex: 1;
+.pedidos-ver-detalle-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.5rem;
 }
 
 @media (max-width: 768px) {
-  .home-container {
+  .pedidos-home-container {
     flex-direction: column;
   }
 
-  .sidebar {
+  .pedidos-sidebar {
     width: 100%;
     height: auto;
   }
 
-  .main-content {
+  .pedidos-main-content {
     height: calc(100vh - 60px);
   }
 
-  .content-container {
+  .pedidos-content-container {
     padding: 1rem;
   }
 
-  .historial-pedidos {
+  .pedidos-historial-pedidos {
     padding: 1rem;
   }
 
-  .producto-detalle {
+  .pedidos-pedido-item {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .detalle-cantidad, .detalle-precio {
-    margin-top: 0.25rem;
+  .pedidos-ver-detalle-button {
+    margin-top: 1rem;
   }
 }

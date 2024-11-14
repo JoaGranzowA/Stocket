@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, Apple, Boxes, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, LogOut, Minus, Plus, Trash2 } from 'lucide-react';
+import { Home, Apple, Users, ShoppingCart, BarChart2, Lightbulb, Settings, LogOut, MessageCircle, ShoppingBag, Minus, Plus, Trash2 } from 'lucide-react';
 import { ACCESS_TOKEN } from '../constants';
-import "../styles/Carrito.css"
+import '../styles/Carrito.css';
 
 export default function Carrito() {
   const [currentPage, setCurrentPage] = useState('/carrito');
@@ -10,7 +10,6 @@ export default function Carrito() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Cargar el carrito de localStorage cuando el componente se monta
     try {
       const carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
       if (carritoGuardado.length > 0) {
@@ -24,11 +23,11 @@ export default function Carrito() {
 
   const actualizarCantidad = (productoId, cantidad) => {
     setCarrito((prevCarrito) => {
-      const nuevoCarrito = prevCarrito.map((item) =>
-        item.id === productoId
-          ? { ...item, cantidad: Math.max(0, item.cantidad + cantidad) }
-          : item
-      ).filter((item) => item.cantidad > 0);
+      const nuevoCarrito = prevCarrito
+        .map((item) =>
+          item.id === productoId ? { ...item, cantidad: Math.max(0, item.cantidad + cantidad) } : item
+        )
+        .filter((item) => item.cantidad > 0);
       localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
       return nuevoCarrito;
     });
@@ -54,29 +53,54 @@ export default function Carrito() {
     }
 
     try {
-      const productos = carrito.map((item) => ({
-        id: item.id,
-        cantidad: item.cantidad
+      // Agrupar productos por vendedor
+      const productosPorVendedor = carrito.reduce((acc, item) => {
+        if (!acc[item.vendedor]) {
+          acc[item.vendedor] = [];
+        }
+        acc[item.vendedor].push({
+          id: item.id,
+          cantidad: item.cantidad,
+          precio: item.precio,
+        });
+        return acc;
+      }, {});
+
+      // Crear pedidos para cada proveedor
+      const pedidos = Object.keys(productosPorVendedor).map((vendedor) => ({
+        vendedor,
+        productos: productosPorVendedor[vendedor],
+        total: productosPorVendedor[vendedor].reduce(
+          (sum, item) => sum + item.precio * item.cantidad,
+          0
+        ).toFixed(2),
       }));
 
-      const res = await fetch('http://localhost:8000/api/compras/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({ productos, total: calcularTotal() }),
-      });
+      // Enviar cada pedido al backend
+      for (const pedido of pedidos) {
+        const res = await fetch('http://localhost:8000/api/compras/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            vendedor: pedido.vendedor,
+            productos: pedido.productos,
+            total: pedido.total,
+          }),
+        });
 
-      if (!res.ok) {
-        throw new Error('Error al completar la compra');
+        if (!res.ok) {
+          throw new Error(`Error al completar la compra para el vendedor ${pedido.vendedor}`);
+        }
       }
+
+      // Limpiar el carrito y navegar a la página de confirmación
       localStorage.setItem('ultimoPedido', JSON.stringify(carrito));
       localStorage.setItem('ultimoTotal', calcularTotal());
-      // Limpiar el carrito después de una compra exitosa
       setCarrito([]);
       localStorage.removeItem('carrito');
-      // Redirigir a una página de confirmación
       navigate('/confirmacion');
     } catch (error) {
       console.error('Error al completar la compra:', error);
@@ -88,57 +112,75 @@ export default function Carrito() {
     navigate(path);
   };
 
-  const navItems = [
-    { name: 'Inicio', icon: Home, path: '/vendedor/home' },
-    { name: 'Productos', icon: Apple, path: '/productos' },
-    { name: 'Proveedores', icon: Users, path: '/proveedores' },
-    { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
-    { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
-    { name: 'Mi Stock', icon: Boxes, path: '/stock' },
-    { name: 'Análisis', icon: BarChart2, path: '/analisis' },
-    { name: 'Configuración', icon: Settings, path: '/perfil' },
-    { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+  const sidebarSections = [
+    {
+      title: 'Panel de Control',
+      items: [
+        { name: 'Panel Principal', icon: Home, path: '/vendedor/home' },
+        { name: 'Catálogo de Productos', icon: Apple, path: '/productos' },
+        { name: 'Nuestros Proveedores', icon: Users, path: '/proveedores' },
+      ],
+    },
+    {
+      title: 'Gestión y Operaciones',
+      items: [
+        { name: 'Mis Pedidos', icon: ShoppingCart, path: '/pedidos' },
+        { name: 'Reportes de Ventas', icon: BarChart2, path: '/analisis' },
+        { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
+      ],
+    },
+    {
+      title: 'Configuración',
+      items: [
+        { name: 'Ajustes de Perfil', icon: Settings, path: '/perfil' },
+        { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+      ],
+    },
   ];
 
   return (
-    <div className="home-container">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="logo-container">
-          <h1 className="logo">Stocket</h1>
+    <div className="carrito-home-container">
+      <aside className="carrito-sidebar">
+        <div className="carrito-logo-container">
+          <h1 className="carrito-logo">Stocket</h1>
         </div>
-       <nav className="sidebar-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
-              onClick={() => handleNavigation(item.path)}
-            >
-              {React.createElement(item.icon, { className: "nav-icon" })}
-              {item.name}
-            </button>
+
+        <nav className="carrito-sidebar-nav">
+          {sidebarSections.map((section, index) => (
+            <div key={index} className="carrito-nav-section">
+              <h2 className="carrito-nav-section-title">{section.title}</h2>
+              {section.items.map((item) => (
+                <button
+                  key={item.name}
+                  className={`carrito-nav-item ${
+                    currentPage === item.path ? 'carrito-active' : ''
+                  }`}
+                  onClick={() => handleNavigation(item.path)}
+                >
+                  <item.icon className="carrito-nav-icon" />
+                  {item.name}
+                </button>
+              ))}
+            </div>
           ))}
         </nav>
       </aside>
 
-      <div className="main-content">
-        <header className="navbar">
-          <div className="navbar-container">
-            <a href="#" className="navbar-title">
-              Carrito de Compras
-            </a>
-            <div className="navbar-actions">
-              <button className="navbar-button" onClick={() => handleNavigation('/productos')}>
-                <ShoppingCart className="navbar-icon" />
-                Seguir Comprando
+      <div className="carrito-main-content">
+        <header className="carrito-navbar">
+          <div className="carrito-navbar-container">
+            <a href="#" className="carrito-navbar-title"></a>
+            <div className="carrito-navbar-actions">
+              <button className="carrito-navbar-button" onClick={() => handleNavigation('/productos')}>
+                <ShoppingCart className="carrito-navbar-icon" />
               </button>
             </div>
           </div>
         </header>
 
-        <main className="page-content">
-          <div className="content-container">
-            <h2 className="title">Tu Carrito</h2>
+        <main className="carrito-page-content">
+          <div className="carrito-content-container">
+            <h2 className="carrito-title">Tu Carrito</h2>
             {carrito.length === 0 ? (
               <p className="carrito-vacio">Tu carrito está vacío.</p>
             ) : (
@@ -151,13 +193,14 @@ export default function Carrito() {
                           <img
                             src={`http://localhost:8000${item.imagen}`}
                             alt={item.titulo}
-                            className="producto-imagen"
+                            className="carrito-imagen"
                           />
                         )}
                       </div>
                       <div className="item-detalles">
                         <h3>{item.titulo}</h3>
-                        <p className="item-precio">${item.precio.toFixed(2)}</p>
+                        <p className="item-precio">Precio: ${item.precio.toFixed(2)}</p>
+                        <p className="item-vendedor">Vendedor: {item.vendedor}</p>
                       </div>
                       <div className="item-cantidad">
                         <button onClick={() => actualizarCantidad(item.id, -1)}>

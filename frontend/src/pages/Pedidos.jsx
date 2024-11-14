@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, Package, Apple, Boxes, Lightbulb, ShoppingCart, BarChart2, Settings, MessageCircle, ShoppingBag, LogOut } from 'lucide-react';
+import { Home, Apple, Users, ShoppingCart, BarChart2, Lightbulb, Settings, LogOut, ChevronRight } from 'lucide-react';
 import '../styles/Pedidos.css';
 import { ACCESS_TOKEN } from '../constants';
 
 export default function HistorialPedidos() {
   const [pedidos, setPedidos] = useState([]);
   const [currentPage, setCurrentPage] = useState('/pedidos');
+  const [carrito, setCarrito] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,8 +18,7 @@ export default function HistorialPedidos() {
       return;
     }
 
-    // Obtener el historial de pedidos del customer
-    fetch('http://localhost:8000/api/pedidos/', {
+    fetch('http://localhost:8000/api/pedido/', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -36,85 +36,105 @@ export default function HistorialPedidos() {
         setPedidos(data);
       })
       .catch((error) => console.error('Error al cargar historial de pedidos:', error));
+
+    const carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
+    setCarrito(carritoGuardado);
   }, [navigate]);
 
   const handleNavigation = (path) => {
+    setCurrentPage(path);
     navigate(path);
   };
 
-  const navItems = [
-    { name: 'Inicio', icon: Home, path: '/vendedor/home' },
-    { name: 'Productos', icon: Apple, path: '/productos' },
-    { name: 'Proveedores', icon: Users, path: '/proveedores' },
-    { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
-    { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
-    { name: 'Mi Stock', icon: Boxes, path: '/stock' },
-    { name: 'Análisis', icon: BarChart2, path: '/analisis' },
-    { name: 'Configuración', icon: Settings, path: '/perfil' },
-    { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+  const handleVerDetalle = (pedidoId) => {
+    if (pedidoId) {
+      navigate(`/pedidos/${pedidoId}`);
+    } else {
+      console.error('No se encontró el ID del pedido asociado');
+    }
+  };
+
+  const sidebarSections = [
+    {
+      title: "Panel de Control",
+      items: [
+        { name: 'Panel Principal', icon: Home, path: '/vendedor/home' },
+        { name: 'Catálogo de Productos', icon: Apple, path: '/productos' },
+        { name: 'Nuestros Proveedores', icon: Users, path: '/proveedores' },
+      ]
+    },
+    {
+      title: "Gestión y Operaciones",
+      items: [
+        { name: 'Mis Pedidos', icon: ShoppingCart, path: '/pedidos' },
+        { name: 'Reportes de Ventas', icon: BarChart2, path: '/analisis' },
+        { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
+      ]
+    },
+    {
+      title: "Configuración",
+      items: [
+        { name: 'Ajustes de Perfil', icon: Settings, path: '/perfil' },
+        { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+      ]
+    }
   ];
 
   return (
-    <div className="home-container">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="logo-container">
-          <h1 className="logo">Stocket</h1>
+    <div className="pedidos-home-container">
+      <aside className="pedidos-sidebar">
+        <div className="pedidos-logo-container">
+          <h1 className="pedidos-logo">Stocket</h1>
         </div>
-       <nav className="sidebar-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
-              onClick={() => navigate(item.path)}
-            >
-              <item.icon className="nav-icon" />
-              {item.name}
-            </button>
+
+        <nav className="pedidos-sidebar-nav">
+          {sidebarSections.map((section, index) => (
+            <div key={index} className="pedidos-nav-section">
+              <h2 className="pedidos-nav-section-title">{section.title}</h2>
+              {section.items.map((item) => (
+                <button
+                  key={item.name}
+                  className={`pedidos-nav-item ${currentPage === item.path ? 'pedidos-active' : ''}`}
+                  onClick={() => handleNavigation(item.path)}
+                >
+                  <item.icon className="pedidos-nav-icon" />
+                  {item.name}
+                </button>
+              ))}
+            </div>
           ))}
         </nav>
       </aside>
 
-      <div className="main-content">
-        <header className="navbar">
-          <div className="navbar-container">
-            <a href="#" className="navbar-title">
-              Historial de Pedidos
-            </a>
+      <div className="pedidos-main-content">
+        <header className="pedidos-navbar">
+          <div className="pedidos-navbar-container">
+            <h1 className="pedidos-navbar-title"></h1>
+            <div className="pedidos-navbar-actions">
+              {/* Puedes agregar botones o acciones adicionales aquí si es necesario */}
+            </div>
           </div>
         </header>
 
-        <main className="page-content">
-          <div className="content-container">
-            <h2 className="title">Tus Pedidos</h2>
+        <main className="pedidos-page-content">
+          <div className="pedidos-content-container">
+            <h2 className="pedidos-title">Tus Pedidos</h2>
             {pedidos.length === 0 ? (
-              <p className="historial-vacio">No has realizado ningún pedido aún.</p>
+              <p className="pedidos-historial-vacio">No has realizado ningún pedido aún.</p>
             ) : (
-              <div className="historial-pedidos">
-                <ul className="lista-pedidos">
+              <div className="pedidos-historial-pedidos">
+                <ul className="pedidos-lista-pedidos">
                   {pedidos.map((pedido) => (
-                    <li key={pedido.id} className="pedido-item">
-                      <div className="pedido-detalles">
+                    <li key={pedido.id} className="pedidos-pedido-item">
+                      <div className="pedidos-pedido-detalles">
                         <h3>Pedido #{pedido.id}</h3>
                         <p>Fecha: {pedido.fecha ? new Date(pedido.fecha).toLocaleDateString() : 'Fecha no disponible'}</p>
                         <p>Total: ${Number(pedido.total).toFixed(2)}</p>
                       </div>
-                      <div className="productos-pedido">
-                        <h4>Productos:</h4>
-                        <ul>
-                          {pedido.detalles && Array.isArray(pedido.detalles) ? (
-                            pedido.detalles.map((producto) => (
-                              <li key={producto.id} className="producto-detalle">
-                                <div className="detalle-titulo">{producto.producto ? producto.producto.titulo : 'Producto no disponible'}</div>
-                                <div className="detalle-cantidad">Cantidad: {producto.cantidad}</div>
-                                <div className="detalle-precio">Precio: ${Number(producto.precio).toFixed(2)}</div>
-                              </li>
-                            ))
-                          ) : (
-                            <p>No hay productos disponibles en este pedido.</p>
-                          )}
-                        </ul>
-                      </div>
+                      <button className="pedidos-ver-detalle-button" onClick={() => handleVerDetalle(pedido.id)}>
+                        Ver Detalle
+                        <ChevronRight className="pedidos-ver-detalle-icon" />
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -126,4 +146,3 @@ export default function HistorialPedidos() {
     </div>
   );
 }
-

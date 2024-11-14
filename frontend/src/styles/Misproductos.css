@@ -1,36 +1,56 @@
-.home-container {
+.mp-container {
   display: flex;
   height: 100vh;
   background-color: #f0f0f0;
   font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
-.sidebar {
+.mp-sidebar {
   width: 250px;
   background-color: white;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
-.logo-container {
-  padding: 1rem;
+.mp-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0.5rem;
 }
 
-.logo {
-  font-size: 1.5rem;
+.mp-logo {
+  font-size: 2.25rem;
   font-weight: bold;
   color: #8b5cf6;
   margin: 0;
 }
 
-.sidebar-nav {
+.mp-sidebar-nav {
   display: flex;
   flex-direction: column;
-  padding-top: 1rem;
+  padding: 1rem 0;
 }
 
-.nav-item {
+.mp-nav-section {
+  margin-bottom: 1.5rem;
+}
+
+.mp-nav-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.mp-nav-item {
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
@@ -42,37 +62,38 @@
   cursor: pointer;
   width: 100%;
   text-align: left;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
-.nav-item.active {
+.mp-nav-item:hover {
+  background-color: #f3e8ff;
+}
+
+.mp-nav-item.mp-active {
   color: #8b5cf6;
   background-color: #f3e8ff;
   font-weight: 600;
 }
 
-.nav-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.75rem;
+.mp-nav-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.85rem;
 }
 
-.main-content {
+.mp-main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.navbar {
+.mp-navbar {
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
-.navbar-container {
+.mp-navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,19 +101,18 @@
   height: 3rem;
 }
 
-.navbar-title {
+.mp-navbar-title {
   font-size: 1.25rem;
   font-weight: 600;
   color: #1f2937;
-  text-decoration: none;
 }
 
-.navbar-actions {
+.mp-navbar-actions {
   display: flex;
   gap: 1rem;
 }
 
-.navbar-button {
+.mp-navbar-button {
   background: none;
   border: none;
   cursor: pointer;
@@ -100,32 +120,34 @@
   transition: color 0.3s;
 }
 
-.navbar-icon {
+.mp-navbar-button:hover {
+  color: #8b5cf6;
+}
+
+.mp-navbar-icon {
   width: 1.5rem;
   height: 1.5rem;
 }
 
-.page-content {
+.mp-page-content {
   flex: 1;
-  overflow-x: hidden;
   overflow-y: auto;
-  background-color: #f0f0f0;
   padding: 2rem;
 }
 
-.content-container {
+.mp-content-container {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.title {
+.mp-title {
   font-size: 1.875rem;
   font-weight: 600;
   color: #1f2937;
   margin-bottom: 1.5rem;
 }
 
-.boton-agregar {
+.mp-boton-agregar {
   background-color: #8b5cf6;
   color: white;
   padding: 0.75rem 1rem;
@@ -133,19 +155,19 @@
   border: none;
   cursor: pointer;
   display: flex;
-  align-items:  center;
+  align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
   font-size: 1rem;
 }
 
-.productos-grid {
+.mp-productos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
 }
 
-.producto-card {
+.mp-producto-card {
   background-color: white;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -155,7 +177,7 @@
   overflow: hidden;
 }
 
-.producto-imagen {
+.mp-producto-imagen {
   width: 100%;
   height: 200px;
   object-fit: cover;
@@ -163,26 +185,26 @@
   margin-bottom: 1rem;
 }
 
-.producto-nombre {
+.mp-producto-nombre {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: #1f2937;
 }
 
-.producto-precio, .producto-stock {
+.mp-producto-precio, .mp-producto-stock {
   font-size: 1rem;
   color: #4b5563;
   margin-bottom: 0.5rem;
 }
 
-.producto-acciones {
+.mp-producto-acciones {
   display: flex;
   justify-content: space-between;
   margin-top: auto;
 }
 
-.boton-accion {
+.mp-boton-accion {
   padding: 0.5rem;
   border-radius: 0.25rem;
   border: none;
@@ -193,17 +215,17 @@
   transition: background-color 0.3s;
 }
 
-.boton-editar {
+.mp-boton-editar {
   background-color: #a78bfa;
   color: white;
 }
 
-.boton-eliminar {
+.mp-boton-eliminar {
   background-color: #7c3aed;
   color: white;
 }
 
-.modal-overlay {
+.mp-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -215,7 +237,7 @@
   align-items: center;
 }
 
-.modal-content {
+.mp-modal-content {
   background-color: white;
   padding: 2rem;
   border-radius: 0.5rem;
@@ -225,18 +247,18 @@
   overflow-y: auto;
 }
 
-.form-group {
+.mp-form-group {
   margin-bottom: 1rem;
 }
 
-.label {
+.mp-label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #4b5563;
 }
 
-.input, .textarea {
+.mp-input, .mp-textarea {
   width: 100%;
   padding: 0.5rem;
   border-radius: 0.25rem;
@@ -244,12 +266,12 @@
   font-size: 1rem;
 }
 
-.textarea {
+.mp-textarea {
   min-height: 100px;
   resize: vertical;
 }
 
-.boton-guardar, .boton-cancelar {
+.mp-boton-guardar, .mp-boton-cancelar {
   padding: 0.75rem 1rem;
   border-radius: 0.25rem;
   border: none;
@@ -258,32 +280,40 @@
   margin-top: 1rem;
 }
 
-.boton-guardar {
+.mp-boton-guardar {
   background-color: #8b5cf6;
   color: white;
   margin-right: 0.5rem;
 }
 
-.boton-cancelar {
+.mp-boton-cancelar {
   background-color: #e5e7eb;
   color: #4b5563;
 }
 
 @media (max-width: 768px) {
-  .home-container {
+  .mp-container {
     flex-direction: column;
   }
 
-  .sidebar {
+  .mp-sidebar {
     width: 100%;
     height: auto;
   }
 
-  .productos-grid {
+  .mp-main-content {
+    height: calc(100vh - 60px);
+  }
+
+  .mp-content-container {
+    padding: 1rem;
+  }
+
+  .mp-productos-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 
-  .modal-content {
+  .mp-modal-content {
     width: 95%;
     padding: 1rem;
   }

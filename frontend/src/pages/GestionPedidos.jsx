@@ -1,26 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, ShoppingCart, Box, FileText, Settings, LogOut, MessageCircle, Check, X, CirclePercent} from 'lucide-react';
-import "../styles/GestionPedidos.css";
+import { Home, Users, Apple, Boxes, Lightbulb, ShoppingCart, Box, FileText, Settings, LogOut, BarChart2, MessageCircle, ShoppingBag, CirclePercent } from 'lucide-react';
+import { ACCESS_TOKEN } from '../constants';
+import '../styles/GestionPedidos.css';
 
-export default function GestionPedidos() {
-  const [currentPage, setCurrentPage] = useState('/gestion-pedidos');
+export default function PedidosProveedor() {
+  const [pedidos, setPedidos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState('/gestionpedidos');
   const navigate = useNavigate();
 
-  // Pedidos de ejemplo
-  const [pedidos, setPedidos] = useState([
-    { id: 1, fecha_creacion: '2023-05-01', cliente: 'Juan Pérez', total: 150.50, estado: 'Pendiente' },
-    { id: 2, fecha_creacion: '2023-05-02', cliente: 'María García', total: 75.25, estado: 'Aceptado' },
-    { id: 3, fecha_creacion: '2023-05-03', cliente: 'Carlos Rodríguez', total: 200.00, estado: 'Rechazado' },
-    { id: 4, fecha_creacion: '2023-05-04', cliente: 'Ana Martínez', total: 50.75, estado: 'Pendiente' },
-    { id: 5, fecha_creacion: '2023-05-05', cliente: 'Luis Sánchez', total: 125.00, estado: 'Aceptado' },
-    { id: 6, fecha_creacion: '2023-05-06', cliente: 'Elena López', total: 90.50, estado: 'Pendiente' },
-  ]);
+  useEffect(() => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    if (!token) {
+      console.error('No hay token disponible');
+      navigate('/login');
+      return;
+    }
 
-  const handleActualizarEstado = (id, nuevoEstado) => {
-    setPedidos(pedidos.map(pedido => 
-      pedido.id === id ? { ...pedido, estado: nuevoEstado } : pedido
-    ));
+    fetch('http://localhost:8000/api/pedidos-proveedor/', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Error al cargar los pedidos del proveedor');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setPedidos(data);
+      })
+      .catch((error) => {
+        console.error('Error al cargar los pedidos del proveedor:', error);
+        setError(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [navigate]);
+
+  const handleCambiarEstado = (pedidoId, nuevoEstado) => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    fetch(`http://localhost:8000/api/pedidos-proveedor/${pedidoId}/`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ estado: nuevoEstado }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Error al cambiar el estado del pedido');
+        }
+        return res.json();
+      })
+      .then((actualizado) => {
+        setPedidos((prevPedidos) =>
+          prevPedidos.map((pedido) => (pedido.id === actualizado.id ? actualizado : pedido))
+        );
+      })
+      .catch((error) => {
+        console.error('Error al cambiar el estado del pedido:', error);
+      });
   };
 
   const handleNavigation = (path) => {
@@ -28,87 +75,135 @@ export default function GestionPedidos() {
     navigate(path);
   };
 
-  const handleChatClick = () => {
-    console.log("Chat clicked");
-  };
-
-  const navItems = [
-    { name: 'Inicio', icon: Home, path: '/proveedor/home' },
-    { name: 'Mis Productos', icon: Box, path: '/misproductos' },
-    { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestion-pedidos' },
-    { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
-    { name: 'Ofertar', icon:CirclePercent, path: '/verstock' },
-    { name: 'Configuración', icon: Settings, path: '/perfil' },
-    { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+  const sidebarSections = [
+    {
+      title: "Panel de Control",
+      items: [
+        { name: 'Panel Principal', icon: Home, path: '/proveedor/home' },
+        { name: 'Gestión de Productos', icon: Box, path: '/misproductos' },
+        { name: 'Administrar Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
+      ]
+    },
+    {
+      title: "Gestión y Operaciones",
+      items: [
+        { name: 'Resumen Financiero', icon: FileText, path: '/finanzas' },
+        { name: 'Ofertas de Reabastecimiento', icon: CirclePercent, path: '/verstock' },
+      ]
+    },
+    {
+      title: "Configuración",
+      items: [
+        { name: 'Ajustes de Perfil', icon: Settings, path: '/perfil' },
+        { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+      ]
+    }
   ];
 
+  if (loading) {
+    return <div className="pp-loading">Cargando...</div>;
+  }
+
+  if (error) {
+    return <div className="pp-error">Error: {error.message}</div>;
+  }
+
   return (
-    <div className="home-container">
-      <aside className="sidebar">
-        <div className="logo-container">
-          <h1 className="logo">Stocket</h1>
+    <div className="pp-container">
+      <aside className="pp-sidebar">
+        <div className="pp-sidebar-header">
+          <h1 className="pp-sidebar-title">Stocket</h1>
         </div>
-        <nav className="sidebar-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
-              onClick={() => handleNavigation(item.path)}
-            >
-              <item.icon className="nav-icon" />
-              <span>{item.name}</span>
-            </button>
+        <nav className="pp-sidebar-nav">
+          {sidebarSections.map((section, index) => (
+            <div key={index} className="pp-sidebar-section">
+              <h2 className="pp-sidebar-section-title">{section.title}</h2>
+              {section.items.map((item) => (
+                <button
+                  key={item.name}
+                  className={`pp-sidebar-nav-item ${currentPage === item.path ? 'pp-active' : ''}`}
+                  onClick={() => handleNavigation(item.path)}
+                >
+                  <item.icon className="pp-sidebar-nav-icon" />
+                  {item.name}
+                </button>
+              ))}
+            </div>
           ))}
         </nav>
       </aside>
 
-      <div className="main-content">
-        <header className="navbar">
-          <div className="navbar-container">
-            <h2 className="navbar-title">Gestión de Pedidos</h2>
-            <div className="navbar-actions">
-              <button className="navbar-button" onClick={handleChatClick}>
-                <MessageCircle className="navbar-icon" />
-                <span className="sr-only">Abrir chat</span>
+      <div className="pp-main-content">
+        <header className="pp-navbar">
+          <div className="pp-navbar-container">
+            <h1 className="pp-navbar-title"></h1>
+            <div className="pp-navbar-actions">
+              <button className="pp-navbar-action-button">
+                <MessageCircle />
+              </button>
+              <button className="pp-navbar-action-button">
+
               </button>
             </div>
           </div>
         </header>
 
-        <main className="page-content">
-          <div className="content-container">
-            <h2 className="title">Historial de Pedidos</h2>
-            <div className="pedidos-grid">
-              {pedidos.map(pedido => (
-                <div key={pedido.id} className="pedido-card">
-                  <h3 className="pedido-numero">Pedido #{pedido.id}</h3>
-                  <p className="pedido-fecha">Fecha: {new Date(pedido.fecha_creacion).toLocaleDateString()}</p>
-                  <p className="pedido-cliente">Cliente: {pedido.cliente}</p>
-                  <p className="pedido-total">Total: ${pedido.total.toFixed(2)}</p>
-                  <p className={`pedido-estado estado-${pedido.estado.toLowerCase()}`}>
-                    Estado: {pedido.estado}
-                  </p>
-                  <div className="pedido-acciones">
-                    <button 
-                      className="boton-accion boton-aceptar" 
-                      onClick={() => handleActualizarEstado(pedido.id, 'Aceptado')}
-                      disabled={pedido.estado !== 'Pendiente'}
-                    >
-                      <Check className="accion-icon" />
-                      <span className="sr-only">Aceptar pedido</span>
-                    </button>
-                    <button 
-                      className="boton-accion boton-rechazar" 
-                      onClick={() => handleActualizarEstado(pedido.id, 'Rechazado')}
-                      disabled={pedido.estado !== 'Pendiente'}
-                    >
-                      <X className="accion-icon" />
-                      <span className="sr-only">Rechazar pedido</span>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <main className="pp-content">
+          <div className="pp-content-container">
+            <h2 className="pp-content-title">Pedidos de tus Productos</h2>
+            {pedidos.length === 0 ? (
+              <p className="pp-no-pedidos">No tienes pedidos actualmente.</p>
+            ) : (
+              <ul className="pp-pedidos-list">
+                {pedidos.map((pedido) => (
+                  <li key={pedido.id} className="pp-pedido-item">
+                    <div className="pp-pedido-header">
+                      <h3 className="pp-pedido-title">Pedido #{pedido.id}</h3>
+                      <span className={`pp-pedido-status pp-${pedido.estado}`}>
+                        {pedido.estado}
+                      </span>
+                    </div>
+                    <p className="pp-pedido-info">Cliente: {pedido.cliente.username}</p>
+                    <p className="pp-pedido-info">Total: ${Number(pedido.total).toFixed(2)}</p>
+                    <p className="pp-pedido-info">Fecha: {new Date(pedido.fecha).toLocaleDateString()}</p>
+                    
+                    <h4 className="pp-productos-title">Productos comprados:</h4>
+                    {pedido.detalles && pedido.detalles.length > 0 ? (
+                      <ul className="pp-productos-list">
+                        {pedido.detalles.map((detalle, index) => (
+                          <li key={index} className="pp-producto-item">
+                            <p className="pp-producto-info">Producto: {detalle.producto.titulo}</p>
+                            <p className="pp-producto-info">Cantidad: {detalle.cantidad}</p>
+                            <p className="pp-producto-info">Precio Unitario: ${Number(detalle.precio).toFixed(2)}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="pp-no-productos">No hay productos en este pedido.</p>
+                    )}
+
+                    <div className="pp-pedido-actions">
+                      {pedido.estado === 'pagado' && (
+                        <button
+                          onClick={() => handleCambiarEstado(pedido.id, 'preparacion')}
+                          className="pp-action-button pp-preparacion"
+                        >
+                          Marcar como En Preparación
+                        </button>
+                      )}
+                      {pedido.estado === 'preparacion' && (
+                        <button
+                          onClick={() => handleCambiarEstado(pedido.id, 'camino')}
+                          className="pp-action-button pp-camino"
+                        >
+                          Marcar como En Camino
+                        </button>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </main>
       </div>

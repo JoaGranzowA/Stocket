@@ -68,6 +68,49 @@ class Mensaje(models.Model):
 
     def __str__(self):
         return f"De {self.remitente.username} a {self.destinatario.username}"
+    
+
+class CalificacionProveedor(models.Model):
+    proveedor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='calificaciones')
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='calificaciones_realizadas')
+    puntuacion = models.PositiveSmallIntegerField()  # Rango de 1 a 5
+    comentario = models.TextField(null=True, blank=True)
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('proveedor', 'cliente')  # Un cliente puede calificar a un proveedor solo una vez
+
+    def __str__(self):
+        return f'Calificación de {self.cliente.username} para {self.proveedor.username}'
+
+    def calcular_promedio_calificacion(proveedor_id):
+        proveedor = User.objects.get(pk=proveedor_id)
+        calificaciones = proveedor.calificaciones.all()
+        if calificaciones.exists():
+            return calificaciones.aggregate(models.Avg('puntuacion'))['puntuacion__avg']
+        return 0
+    
+class Pedido(models.Model):
+    ESTADOS_PEDIDO = [
+        ('pagado', 'Pagado'),
+        ('preparacion', 'En Preparación'),
+        ('camino', 'En Camino'),
+        ('entregado', 'Entregado'),
+    ]
+
+    fecha = models.DateTimeField(auto_now_add=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    estado = models.CharField(max_length=15, choices=ESTADOS_PEDIDO, default='pagado')
+    pagado = models.BooleanField(default=False)
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pedidos')
+    compra = models.ForeignKey('Compra', on_delete=models.CASCADE, related_name='pedidos')  # Cambiado a ForeignKey
+
+    def __str__(self):
+        return f'Pedido #{self.id} - Estado: {self.estado}'
+
+
+
+
 
 
     

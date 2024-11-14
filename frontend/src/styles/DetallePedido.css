@@ -1,0 +1,307 @@
+.detalle-pedido-home-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f0f0f0;
+    font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  }
+  
+  .detalle-pedido-sidebar {
+    width: 250px;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .detalle-pedido-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0.5rem;
+  }
+  
+  .detalle-pedido-logo {
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: #8b5cf6;
+    margin: 0;
+  }
+  
+  .detalle-pedido-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+  
+  .detalle-pedido-nav-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .detalle-pedido-nav-section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .detalle-pedido-nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: #4b5563;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+  
+  .detalle-pedido-nav-item:hover {
+    background-color: #f3e8ff;
+  }
+  
+  .detalle-pedido-nav-item.detalle-pedido-active {
+    color: #8b5cf6;
+    background-color: #f3e8ff;
+    font-weight: 600;
+  }
+  
+  .detalle-pedido-nav-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.85rem;
+  }
+  
+  .detalle-pedido-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .detalle-pedido-navbar {
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .detalle-pedido-navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    height: 3rem;
+  }
+  
+  .detalle-pedido-navbar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    text-decoration: none;
+  }
+  
+  .detalle-pedido-navbar-actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .detalle-pedido-navbar-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4b5563;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+  }
+  
+  .detalle-pedido-navbar-button:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .detalle-pedido-navbar-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+  }
+  
+  .detalle-pedido-page-content {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f0f0f0;
+    padding: 2rem;
+  }
+  
+  .detalle-pedido-content-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+  }
+  
+  .detalle-pedido-status-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+    margin: 2rem auto;
+    position: relative;
+    padding: 0 1rem;
+  }
+  
+  .detalle-pedido-status-bar::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #e5e7eb;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+  .detalle-pedido-status-step {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+  }
+  
+  .detalle-pedido-status-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 6px);
+    right: calc(50% - 6px);
+    height: 2px;
+    background-color: #e5e7eb;
+    transform: translateY(-50%);
+    z-index: 1;
+    transition: background-color 0.3s ease;
+  }
+  
+  .detalle-pedido-status-step.completed:not(:last-child)::after {
+    background-color: #8b5cf6;
+  }
+  
+  .detalle-pedido-status-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #e5e7eb;
+    position: relative;
+    z-index: 3;
+    margin: 0 auto;
+  }
+  
+  .detalle-pedido-status-step.active .detalle-pedido-status-icon {
+    background-color: #c7b4f3;
+  }
+  
+  .detalle-pedido-status-step.completed .detalle-pedido-status-icon {
+    background-color: #8b5cf6;
+  }
+  
+  .detalle-pedido-status-text {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-transform: capitalize;
+    white-space: nowrap;
+  }
+  
+  .detalle-pedido-status-step.active .detalle-pedido-status-text {
+    color: #c7b4f3;
+    font-weight: 500;
+  }
+  
+  .detalle-pedido-status-step.completed .detalle-pedido-status-text {
+    color: #8b5cf6;
+  }
+  
+  .detalle-pedido-info {
+    margin-bottom: 2rem;
+  }
+  
+  .detalle-pedido-info p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .detalle-pedido-productos-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .detalle-pedido-productos-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .detalle-pedido-producto-item {
+    background-color: #f3f4f6;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .detalle-pedido-producto-item p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .detalle-pedido-marcar-entregado-button {
+    background-color: #8b5cf6;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+  }
+  
+  .detalle-pedido-marcar-entregado-button:hover {
+    background-color: #7c3aed;
+  }
+  
+  @media (max-width: 768px) {
+    .detalle-pedido-home-container {
+      flex-direction: column;
+    }
+  
+    .detalle-pedido-sidebar {
+      width: 100%;
+      height: auto;
+    }
+  
+    .detalle-pedido-main-content {
+      height: calc(100vh - 60px);
+    }
+  
+    .detalle-pedido-status-bar {
+      max-width: 100%;
+      padding: 0 2rem;
+    }
+  
+    .detalle-pedido-status-text {
+      font-size: 0.7rem;
+    }
+  }

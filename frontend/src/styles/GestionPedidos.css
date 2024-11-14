@@ -1,36 +1,58 @@
-.home-container {
+/* PedidosProveedor.css */
+
+.pp-container {
     display: flex;
     height: 100vh;
     background-color: #f0f0f0;
     font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   }
   
-  .sidebar {
+  .pp-sidebar {
     width: 250px;
-    background-color: #ffffff;
+    background-color: white;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
+    height: 100vh;
+    overflow-y: auto;
   }
   
-  .logo-container {
-    padding: 1rem;
+  .pp-sidebar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0.5rem;
   }
   
-  .logo {
-    font-size: 1.5rem;
+  .pp-sidebar-title {
+    font-size: 2.25rem;
     font-weight: bold;
     color: #8b5cf6;
     margin: 0;
   }
   
-  .sidebar-nav {
+  .pp-sidebar-nav {
     display: flex;
     flex-direction: column;
-    padding-top: 1rem;
+    padding: 1rem 0;
   }
   
-  .nav-item {
+  .pp-sidebar-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .pp-sidebar-section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .pp-sidebar-nav-item {
     display: flex;
     align-items: center;
     padding: 0.75rem 1rem;
@@ -42,37 +64,38 @@
     cursor: pointer;
     width: 100%;
     text-align: left;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
   
-  .nav-item.active {
+  .pp-sidebar-nav-item:hover {
+    background-color: #f3e8ff;
+  }
+  
+  .pp-sidebar-nav-item.pp-active {
     color: #8b5cf6;
     background-color: #f3e8ff;
     font-weight: 600;
   }
   
-  .nav-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-right: 0.75rem;
+  .pp-sidebar-nav-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.85rem;
   }
   
-  .main-content {
+  .pp-main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
   
-  .navbar {
-    background-color: #ffffff;
+  .pp-navbar {
+    background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 10;
   }
   
-  .navbar-container {
+  .pp-navbar-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -80,158 +103,230 @@
     height: 3rem;
   }
   
-  .navbar-title {
+  .pp-navbar-title {
     font-size: 1.25rem;
     font-weight: 600;
     color: #1f2937;
   }
   
-  .navbar-actions {
+  .pp-navbar-actions {
     display: flex;
     gap: 1rem;
   }
   
-  .navbar-button {
+  .pp-navbar-action-button {
     background: none;
     border: none;
     cursor: pointer;
     color: #4b5563;
     transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
   }
   
-  .navbar-icon {
-    width: 1.5rem;
-    height: 1.5rem;
+  .pp-navbar-action-button:hover {
+    color: #8b5cf6;
   }
   
-  .page-content {
+  .pp-content {
     flex: 1;
     overflow-y: auto;
     padding: 2rem;
   }
   
-  .content-container {
+  .pp-content-container {
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
+    padding: 0 2rem;
   }
   
-  .title {
-    font-size: 1.875rem;
-    font-weight: 600;
+  .pp-content-title {
+    font-size: 1.5rem;
+    font-weight: 700;
     color: #1f2937;
     margin-bottom: 1.5rem;
   }
   
-  .pedidos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
+  .pp-no-pedidos {
+    color: #6b7280;
   }
   
-  .pedido-card {
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+  .pp-pedidos-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
   }
   
-  .pedido-numero {
+  .pp-pedido-item {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    width: 100%;
+  }
+  
+  .pp-pedido-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .pp-pedido-title {
     font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
     color: #1f2937;
+    margin: 0;
   }
   
-  .pedido-fecha, .pedido-cliente, .pedido-total {
-    font-size: 1rem;
+  .pp-pedido-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .pp-pedido-status.pp-pagado {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+  
+  .pp-pedido-status.pp-preparacion {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+  
+  .pp-pedido-status.pp-camino {
+    background-color: #dbeafe;
+    color: #1e40af;
+  }
+  
+  .pp-pedido-info {
     color: #4b5563;
     margin-bottom: 0.5rem;
   }
   
-  .pedido-estado {
+  .pp-productos-title {
+    font-size: 1rem;
     font-weight: 600;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
+    color: #374151;
+    margin: 1rem 0 0.5rem;
+  }
+  
+  .pp-productos-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .pp-producto-item {
+    background-color: #f3f4f6;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
     margin-bottom: 0.5rem;
   }
   
-  .estado-pendiente {
-    background-color: #fef3c7;
-    color: #d97706;
+  .pp-producto-info {
+    color: #4b5563;
+    margin: 0 0 0.25rem;
   }
   
-  .estado-aceptado {
-    background-color: #d1fae5;
-    color: #059669;
+  .pp-no-productos {
+    color: #6b7280;
+    font-style: italic;
   }
   
-  .estado-rechazado {
-    background-color: #fee2e2;
-    color: #dc2626;
-  }
-  
-  .pedido-acciones {
+  .pp-pedido-actions {
+    margin-top: 1rem;
     display: flex;
-    justify-content: space-between;
-    margin-top: auto;
+    gap: 0.5rem;
   }
   
-  .boton-accion {
-    padding: 0.5rem;
-    border-radius: 0.25rem;
+  .pp-action-button {
+    padding: 0.5rem 1rem;
     border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: background-color 0.3s;
   }
   
-  .boton-aceptar {
-    background-color: #10b981;
-    color: #ffffff;
+  .pp-action-button.pp-preparacion {
+    background-color: #dda0dd;
+    color: white;
   }
   
-  .boton-rechazar {
-    background-color: #ef4444;
-    color: #ffffff;
+  .pp-action-button.pp-preparacion:hover {
+    background-color: #cabaed;
   }
   
-  .boton-accion:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  .pp-action-button.pp-camino {
+    background-color: #9577db;
+    color: white;
   }
   
-  .accion-icon {
-    width: 1.25rem;
-    height: 1.25rem;
+  .pp-action-button.pp-camino:hover {
+    background-color: #cabaed;
   }
   
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
+  .pp-loading, .pp-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.25rem;
+    color: #4b5563;
+  }
+  
+  .pp-error {
+    color: #ef4444;
   }
   
   @media (max-width: 768px) {
-    .home-container {
+    .pp-container {
       flex-direction: column;
     }
   
-    .sidebar {
+    .pp-sidebar {
       width: 100%;
       height: auto;
     }
   
-    .pedidos-grid {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    .pp-main-content {
+      height: calc(100vh - 60px);
+    }
+  
+    .pp-content-container {
+      padding: 1rem;
+    }
+  
+    .pp-pedido-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .pp-pedido-status {
+      margin-top: 0.5rem;
+    }
+  
+    .pp-pedido-actions {
+      flex-direction: column;
+    }
+  
+    .pp-action-button {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .pp-content-container {
+      max-width: 100%;
+      padding: 0 1rem;
     }
   }

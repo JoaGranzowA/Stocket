@@ -1,39 +1,58 @@
-.home-container {
+.recomendaciones-home-container {
   display: flex;
   height: 100vh;
   background-color: #f0f0f0;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
-.sidebar {
+.recomendaciones-sidebar {
   width: 250px;
-  background-color: #ffffff;
+  background-color: white;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
 }
 
-.logo-container {
-  padding: 20px;
+.recomendaciones-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0.5rem;
 }
 
-.logo {
-  font-size: 24px;
+.recomendaciones-logo {
+  font-size: 2.25rem;
   font-weight: bold;
   color: #8b5cf6;
   margin: 0;
 }
 
-.sidebar-nav {
+.recomendaciones-sidebar-nav {
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  padding: 1rem 0;
 }
 
-.nav-item {
+.recomendaciones-nav-section {
+  margin-bottom: 1.5rem;
+}
+
+.recomendaciones-nav-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.recomendaciones-nav-item {
   display: flex;
   align-items: center;
-  padding: 12px 20px;
+  padding: 0.75rem 1rem;
   color: #4b5563;
   text-decoration: none;
   transition: background-color 0.3s, color 0.3s;
@@ -42,59 +61,87 @@
   cursor: pointer;
   width: 100%;
   text-align: left;
-  font-size: 16px;
+  font-size: 0.95rem;
 }
 
-.nav-item:hover {
+.recomendaciones-nav-item:hover {
   background-color: #f3e8ff;
 }
 
-.nav-item.active {
+.recomendaciones-nav-item.recomendaciones-active {
   color: #8b5cf6;
   background-color: #f3e8ff;
-  font-weight: bold;
+  font-weight: 600;
 }
 
-.nav-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 12px;
+.recomendaciones-nav-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.85rem;
 }
 
-.main-content {
+.recomendaciones-main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.navbar {
-  background-color: #ffffff;
+.recomendaciones-navbar {
+  background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-container {
+.recomendaciones-navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 24px;
-  height: 60px;
+  padding: 0.75rem 1.5rem;
+  height: 3rem;
 }
 
-.navbar-title {
-  font-size: 20px;
-  font-weight: bold;
+.recomendaciones-navbar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
   color: #1f2937;
   text-decoration: none;
 }
 
-.page-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 32px;
+.recomendaciones-navbar-actions {
+  display: flex;
+  gap: 1rem;
 }
 
-.recomendaciones-container {
+.recomendaciones-navbar-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4b5563;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.recomendaciones-navbar-button:hover {
+  background-color: #f3f4f6;
+}
+
+.recomendaciones-navbar-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.recomendaciones-page-content {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #f0f0f0;
+  padding: 2rem;
+}
+
+.recomendaciones-content-container {
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -108,88 +155,106 @@
 }
 
 .recomendaciones-section h2 {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: 600;
   color: #1f2937;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
   border-bottom: 2px solid #8b5cf6;
-  padding-bottom: 8px;
+  padding-bottom: 0.5rem;
 }
 
-.productos-grid {
+.recomendaciones-productos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
 }
 
-.producto-card {
-  background-color: #f9fafb;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+.recomendaciones-producto-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.producto-card:hover {
+.recomendaciones-producto-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.producto-imagen {
+.recomendaciones-producto-imagen {
   width: 100%;
-  height: 150px;
+  height: 200px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 12px;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 
-.producto-card h3 {
-  font-size: 18px;
-  font-weight: bold;
+.recomendaciones-producto-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1rem;
+}
+
+.recomendaciones-producto-titulo {
+  font-size: 1.125rem;
+  font-weight: 600;
   color: #1f2937;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
-.producto-card p {
-  font-size: 14px;
+.recomendaciones-producto-precio {
+  font-size: 1rem;
   color: #4b5563;
-  margin-bottom: 12px;
+  margin-bottom: 1rem;
 }
 
-.producto-card button {
+.recomendaciones-producto-boton {
   background-color: #8b5cf6;
-  color: #ffffff;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
   border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: bold;
   cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
   transition: background-color 0.3s;
   margin-top: auto;
 }
 
-.producto-card button:hover {
+.recomendaciones-producto-boton:hover {
   background-color: #7c3aed;
 }
 
 @media (max-width: 768px) {
-  .home-container {
+  .recomendaciones-home-container {
     flex-direction: column;
   }
 
-  .sidebar {
+  .recomendaciones-sidebar {
     width: 100%;
     height: auto;
   }
 
-  .main-content {
+  .recomendaciones-main-content {
     height: calc(100vh - 60px);
   }
 
-  .productos-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  .recomendaciones-productos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .recomendaciones-navbar-container {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 0.75rem;
+  }
+
+  .recomendaciones-navbar-actions {
+    margin-top: 0.5rem;
   }
 }

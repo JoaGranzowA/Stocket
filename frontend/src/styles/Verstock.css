@@ -1,330 +1,406 @@
-.verstock-container {
-    display: flex;
-    height: 100vh;
-    background-color: #f0f0f0;
-    font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-      "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  }
-  
-  .sidebar {
-    width: 250px;
-    background-color: white;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
+.vs-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f0f0f0;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.vs-sidebar {
+  width: 250px;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.vs-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0.5rem;
+}
+
+.vs-logo {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #8b5cf6;
+  margin: 0;
+}
+
+.vs-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.vs-nav-section {
+  margin-bottom: 1.5rem;
+}
+
+.vs-nav-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.vs-nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #4b5563;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.vs-nav-item:hover {
+  background-color: #f3e8ff;
+}
+
+.vs-nav-item.vs-active {
+  color: #8b5cf6;
+  background-color: #f3e8ff;
+  font-weight: 600;
+}
+
+.vs-nav-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.85rem;
+}
+
+.vs-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.vs-navbar {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.vs-navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  height: 3rem;
+}
+
+.vs-navbar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.vs-navbar-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.vs-navbar-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4b5563;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.vs-navbar-button:hover {
+  color: #8b5cf6;
+}
+
+.vs-navbar-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.vs-page-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.vs-content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.vs-stock-empty {
+  text-align: center;
+  font-size: 18px;
+  color: #7f8c8d;
+}
+
+.vs-customer-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vs-customer-item {
+  background-color: #f3e8ff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 4px rgba(139, 92, 246, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.vs-customer-item:hover {
+  box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+}
+
+.vs-customer-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6d28d9;
+  margin: 0 0 16px 0;
+  border-bottom: 2px solid #8b5cf6;
+  padding-bottom: 8px;
+}
+
+.vs-customer-products {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vs-customer-product {
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vs-product-info {
+  flex-grow: 1;
+}
+
+.vs-product-name {
+  font-size: 16px;
+  color: #4b5563;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.vs-stock-info {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.vs-stock-alert-icon {
+  color: #ef4444;
+  margin-left: 8px;
+}
+
+.vs-product-select {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+}
+
+.vs-product-select input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.vs-checkmark {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+.vs-product-select:hover input ~ .vs-checkmark {
+  background-color: #ccc;
+}
+
+.vs-product-select input:checked ~ .vs-checkmark {
+  background-color: #8b5cf6;
+}
+
+.vs-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.vs-product-select input:checked ~ .vs-checkmark:after {
+  display: block;
+}
+
+.vs-product-select .vs-checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.vs-customer-actions {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.vs-offer-button {
+  background-color: #8b5cf6;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.vs-offer-button:hover {
+  background-color: #7c3aed;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .vs-container {
     flex-direction: column;
   }
-  
-  .logo-container {
+
+  .vs-sidebar {
+    width: 100%;
+    height: auto;
+  }
+
+  .vs-main-content {
+    height: calc(100vh - 60px);
+  }
+
+  .vs-content-container {
     padding: 1rem;
   }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #8b5cf6;
-    margin: 0;
-  }
-  
-  .sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    padding-top: 1rem;
-  }
-  
-  .nav-item:hover {
-    background-color: #f3e8ff;
-    color: #8b5cf6;
-  }
-  
-  .nav-item.active {
-    background-color: #f3e8ff;
-    color: #8b5cf6;
-    font-weight: 600;
-  }
-  
-  .nav-item {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    color: #4b5563;
-    text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
-    border: none;
-    background: none;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-    font-size: 1rem;
-  }
-  
-  .nav-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-right: 0.75rem;
-  }
-  
-  .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  
-  .navbar {
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-    height: 3rem;
-  }
-  
-  .navbar-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2937;
-    text-decoration: none;
-  }
-  
-  .navbar-actions {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .navbar-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #4b5563;
-    transition: color 0.3s;
-  }
-  
-  .navbar-button:hover {
-    color: #8b5cf6;
-  }
-  
-  .navbar-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-  
-  .content-container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .stock-empty {
-    text-align: center;
-    font-size: 18px;
-    color: #7f8c8d;
-  }
-  
-  .customer-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .customer-item {
-    background-color: #f3e8ff;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 24px;
-    box-shadow: 0 2px 4px rgba(139, 92, 246, 0.1);
-    transition: box-shadow 0.3s ease;
-  }
-  
-  .customer-item:hover {
-    box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
-  }
-  
-  .customer-name {
-    font-size: 20px;
-    font-weight: bold;
-    color: #6d28d9;
-    margin: 0 0 16px 0;
-    border-bottom: 2px solid #8b5cf6;
-    padding-bottom: 8px;
-  }
-  
-  .customer-products {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .customer-product {
-    background-color: #ffffff;
-    border-radius: 6px;
-    padding: 12px;
-    margin-bottom: 12px;
-    border: 1px solid #e5e7eb;
-  }
-  
-  .product-name {
-    font-size: 16px;
-    color: #4b5563;
-    margin: 0 0 8px 0;
-    font-weight: 600;
-  }
-  
-  .stock-info {
-    font-size: 14px;
-    color: #6b7280;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .stock-alert-icon {
-    color: #ef4444;
-    margin-left: 8px;
-  }
-  
-  .customer-actions {
-    margin-top: 15px;
-    text-align: right;
-  }
-  
-  .offer-button {
-    background-color: #8b5cf6;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 16px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-top: 16px;
-  }
-  
-  .offer-button:hover {
-    background-color: #7c3aed;
-    transform: translateY(-2px);
-  }
-  
-  
-  .low-stock-content {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 24px;
-  }
-  
-  @media (max-width: 768px) {
-    .verstock-container {
-      flex-direction: column;
-    }
-  
-    .sidebar {
-      width: 100%;
-      padding: 10px;
-    }
-  
-    .main-content {
-      padding: 10px;
-    }
+
+  .vs-customer-item {
+    padding: 1rem;
   }
 
-  /* ... (estilos anteriores sin cambios) */
+  .vs-customer-product {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.customer-product {
-    background-color: #ffffff;
-    border-radius: 6px;
-    padding: 12px;
+  .vs-product-select {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .vs-content-container {
+    max-width: 100%;
+    padding: 1rem;
+  }
+}
+
+/* Add these new styles to your existing Verstock.css file */
+
+.vs-customer-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.vs-customer-photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 16px;
+  border: 2px solid #8b5cf6;
+}
+
+.vs-customer-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6d28d9;
+  margin: 0;
+}
+
+.vs-customer-details {
+  margin-left: 76px; /* Align with the right edge of the profile photo */
+}
+
+/* Update these existing styles */
+
+.vs-customer-item {
+  background-color: #f3e8ff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 4px rgba(139, 92, 246, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.vs-customer-item:hover {
+  box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+}
+
+.vs-customer-products {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Add responsive styles */
+
+@media (max-width: 768px) {
+  .vs-customer-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .vs-customer-photo {
     margin-bottom: 12px;
-    border: 1px solid #e5e7eb;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
-  
-  .product-info {
-    flex-grow: 1;
+
+  .vs-customer-details {
+    margin-left: 0;
   }
-  
-  .product-name {
-    font-size: 16px;
-    color: #4b5563;
-    margin: 0 0 8px 0;
-    font-weight: 600;
-  }
-  
-  .stock-info {
-    font-size: 14px;
-    color: #6b7280;
-    margin: 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  .stock-alert-icon {
-    color: #ef4444;
-    margin-left: 8px;
-  }
-  
-  .product-select {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 22px;
-    user-select: none;
-  }
-  
-  .product-select input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  
-  .checkmark {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-    border-radius: 4px;
-  }
-  
-  .product-select:hover input ~ .checkmark {
-    background-color: #ccc;
-  }
-  
-  .product-select input:checked ~ .checkmark {
-    background-color: #8b5cf6;
-  }
-  
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  
-  .product-select input:checked ~ .checkmark:after {
-    display: block;
-  }
-  
-  .product-select .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-  }
-  
-  /* ... (estilos posteriores sin cambios) */
+}

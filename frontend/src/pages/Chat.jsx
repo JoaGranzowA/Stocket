@@ -14,28 +14,6 @@ export default function Chat() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const navItemsCustomer = [
-    { name: 'Inicio', icon: Home, path: '/vendedor/home' },
-    { name: 'Productos', icon: Apple, path: '/productos' },
-    { name: 'Proveedores', icon: Users, path: '/proveedores' },
-    { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
-    { name: 'Pedidos', icon: ShoppingCart, path: '/pedidos' },
-    { name: 'Mi Stock', icon: Boxes, path: '/stock' },
-    { name: 'Análisis', icon: BarChart2, path: '/analisis' },
-    { name: 'Configuración', icon: Settings, path: '/perfil' },
-    { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
-  ];
-
-  const navItemsEmployee = [
-    { name: 'Inicio', icon: Home, path: '/proveedor/home' },
-    { name: 'Mis Productos', icon: Box, path: '/misproductos' },
-    { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
-    { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
-    { name: 'Ofertar', icon:CirclePercent, path: '/verstock' },
-    { name: 'Configuración', icon: Settings, path: '/perfil' },
-    { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
-  ];
-
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
     if (!token) {
@@ -89,7 +67,56 @@ export default function Chat() {
       });
   }, [navigate]);
 
-  const navItems = usuarioActual?.is_employee ? navItemsEmployee : navItemsCustomer;
+  const sidebarSections = usuarioActual?.is_employee
+    ? [
+        {
+          title: "Panel de Control",
+          items: [
+            { name: 'Inicio', icon: Home, path: '/proveedor/home' },
+            { name: 'Mis Productos', icon: Box, path: '/misproductos' },
+            { name: 'Gestión de Pedidos', icon: ShoppingCart, path: '/gestionpedidos' },
+          ]
+        },
+        {
+          title: "Gestión y Operaciones",
+          items: [
+            { name: 'Facturación y Finanzas', icon: FileText, path: '/finanzas' },
+            { name: 'Ofertar', icon: CirclePercent, path: '/verstock' },
+          ]
+        },
+        {
+          title: "Configuración",
+          items: [
+            { name: 'Configuración', icon: Settings, path: '/perfil' },
+            { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+          ]
+        }
+      ]
+    : [
+      {
+        title: "Panel de Control",
+        items: [
+          { name: 'Panel Principal', icon: Home, path: '/vendedor/home' },
+          { name: 'Catálogo de Productos', icon: Apple, path: '/productos' },
+          { name: 'Nuestros Proveedores', icon: Users, path: '/proveedores' },
+        ]
+      },
+      {
+        title: "Gestión y Operaciones",
+        items: [
+          { name: 'Mis Pedidos', icon: ShoppingCart, path: '/pedidos' },
+          { name: 'Reportes de Ventas', icon: BarChart2, path: '/analisis' },
+          { name: 'Recomendaciones', icon: Lightbulb, path: '/recomendaciones' },
+        ]
+      },
+      {
+        title: "Configuración",
+        items: [
+          { name: 'Ajustes de Perfil', icon: Settings, path: '/perfil' },
+          { name: 'Cerrar sesión', icon: LogOut, path: '/logout' },
+        ]
+      }
+      ];
 
   if (loading) {
     return <p>Cargando...</p>;
@@ -153,15 +180,20 @@ export default function Chat() {
           <h1 className="stocket-chat-logo">Stocket</h1>
         </div>
         <nav className="stocket-chat-sidebar-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              className={`nav-item ${currentPage === item.path ? 'active' : ''}`}
-              onClick={() => navigate(item.path)}
-            >
-              <item.icon className="nav-icon" />
-              {item.name}
-            </button>
+          {sidebarSections.map((section, index) => (
+            <div key={index} className="stocket-chat-nav-section">
+              <h2 className="stocket-chat-nav-section-title">{section.title}</h2>
+              {section.items.map((item) => (
+                <button
+                  key={item.name}
+                  className={`stocket-chat-nav-item ${currentPage === item.path ? 'active' : ''}`}
+                  onClick={() => navigate(item.path)}
+                >
+                  <item.icon className="stocket-chat-nav-icon" />
+                  {item.name}
+                </button>
+              ))}
+            </div>
           ))}
         </nav>
       </aside>
@@ -241,4 +273,3 @@ export default function Chat() {
     </div>
   );
 }
-
